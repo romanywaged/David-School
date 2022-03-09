@@ -1,11 +1,17 @@
 package com.example.davidschool.ui.view
 
+import android.Manifest
 import android.app.ActivityOptions
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.davidschool.R
@@ -14,6 +20,7 @@ import com.example.davidschool.ui.adapter.ChildrenAdapter
 import com.example.davidschool.ui.adapter.OnChildClick
 import com.example.davidschool.ui.viewmodel.GetAllChildrenInMeetingViewModel
 import com.example.davidschool.utils.DataState
+import com.google.android.material.internal.ContextUtils.getActivity
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_all_children_in_meeting.*
@@ -24,6 +31,9 @@ import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 
 @AndroidEntryPoint
@@ -34,6 +44,7 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
     private lateinit var childrenAdapter: ChildrenAdapter
     private lateinit var childrenList: ArrayList<Child>
     private val getAllChildrenInMeetingViewModel:GetAllChildrenInMeetingViewModel by viewModels()
+    private val code = 1000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +61,35 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
 
         getAllChildren()
 
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            PackageManager.PERMISSION_GRANTED)
+
+        checkPermissions()
+
 
     }
+
+    private fun checkPermissions()
+    {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                val permission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                requestPermissions(permission, code)
+            } else {
+                createExcellSheet()
+            }
+        } else {
+            createExcellSheet()
+        }
+
+    }
+
+
+
 
     private fun getAllChildren()
     {
@@ -144,6 +182,24 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
             cell = row.createCell(5)
             cell.setCellValue(childrenList[i].childAbouna)
             sheet.setColumnWidth(3, 15 * 500)
+        }
+        val file = File(getExternalFilesDir(null),
+            meetingName+".xls")
+        var outputStream: FileOutputStream? = null
+        try {
+            outputStream = FileOutputStream(file)
+            wb.write(outputStream)
+            Toast.makeText(this,
+                "Excell Sheet Created With Choir Name!",
+                Toast.LENGTH_LONG).show()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Error!", Toast.LENGTH_LONG).show()
+            try {
+                outputStream!!.close()
+            } catch (ex: IOException) {
+                ex.printStackTrace()
+            }
         }
 
     }
