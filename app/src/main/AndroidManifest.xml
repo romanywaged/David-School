@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.davidschool">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:name=".di.MyFreeApp"
+        android:allowBackup="true"
+        android:icon="@drawable/schoollogo"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@drawable/schoollogo"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.KhedmaApp">
+        <activity
+            android:name=".ui.view.GatAllAttendancesInMeetingActivity"
+            android:theme="@style/AllChildren"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.AddAttendanceActivity"
+            android:exported="false"
+            android:theme="@style/AllChildren" />
+        <activity
+            android:name=".ui.view.ChildProfileActivity"
+            android:theme="@style/AllChildren"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.AllChildrenInMeetingActivity"
+            android:exported="false"
+            android:theme="@style/AllChildren" />
+        <activity
+            android:name=".ui.view.AllMeetingsActivity"
+            android:exported="false"
+            android:theme="@style/AllMeetingsTheme" />
+        <activity
+            android:name=".ui.view.AddChildActivity"
+            android:exported="false"
+            android:theme="@style/AddChildTheme" />
+        <activity
+            android:name=".ui.view.MeetingDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">مدرسة الحان المرتل داوود</string>
+    <string name="add_your_data">اضف بيانات الفصل</string>
+    <string name="add_child_data">اضف بيانات مخدومك</string>
+    <string name="person_name">اسم المخدوم..</string>
+    <string name="phone_number">رقم الهاتف..</string>
+    <string name="school_year">السنه الدراسيه..</string>
+    <string name="notes">ملاحظات...</string>
+    <string name="add">اضافه</string>
+    <string name="first">حضانه [الشاروبيم]</string>
+    <string name="second">اولى وتانيه [السيرافيم]</string>
+    <string name="third">ثالثه ورابعه [الاربعة كائنات غير متجسدين]</string>
+    <string name="fourth">خامسه وسادسه [الاربعه و العشرون قسيساً]</string>
+    <string name="fifth">اعدادى و ثانوى [العظيم الانبا انطونيوس]</string>
+    <string name="add_children">اضافة مخدوم</string>
+    <string name="describe_add_children">اضف مخدومك الى قائمة فصلك</string>
+    <string name="all_children">قائمة الفصل</string>
+    <string name="all_children_desc">كل المخومين فى فصلك</string>
+    <string name="add_class">عن الكنيسه البرنامج</string>
+    <string name="add_class_desc">معلومات عن الكنيسه والمدرسه</string>
+    <string name="attendance_list">قائمة الحضور</string>
+    <string name="attendance_desc">اخذ الحضور اليومى للخدمه</string>
+    <string name="parent_phone_number">رقم تليفون الوالد..</string>
+    <string name="child_address">عنوان المخدوم..</string>
+    <string name="child_abouna">اب الاعتراف..</string>
+    <string name="three_year">خامسه</string>
+    <string name="add_attendance">اخذ الحضور اليومى</string>
+    <string name="add_attendance_desc">اضف حضور اليوم</string>
+    <string name="empty">-------</string>
+    <string name="empty_list">لا يوجد بيانات</string>
+</resources>
