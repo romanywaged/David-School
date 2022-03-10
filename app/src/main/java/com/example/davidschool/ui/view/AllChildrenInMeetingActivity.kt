@@ -4,14 +4,17 @@ import android.Manifest
 import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.Settings
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.davidschool.R
@@ -20,11 +23,9 @@ import com.example.davidschool.ui.adapter.ChildrenAdapter
 import com.example.davidschool.ui.adapter.OnChildClick
 import com.example.davidschool.ui.viewmodel.GetAllChildrenInMeetingViewModel
 import com.example.davidschool.utils.DataState
-import com.google.android.material.internal.ContextUtils.getActivity
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_all_children_in_meeting.*
-import kotlinx.android.synthetic.main.activity_all_meetings.*
 import kotlinx.coroutines.flow.collect
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
 import org.apache.poi.ss.usermodel.Cell
@@ -66,26 +67,80 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE),
             PackageManager.PERMISSION_GRANTED)
 
-        checkPermissions()
+        takePermissions()
 
 
     }
 
-    private fun checkPermissions()
+    private fun takePermissions()
     {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED
-            ) {
-                val permission = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                requestPermissions(permission, code)
-            } else {
-                createExcellSheet()
-            }
-        } else {
+        if (isPermissionGranted())
+        {
             createExcellSheet()
         }
+        else{
+            takePermission()
+        }
+    }
 
+    private fun isPermissionGranted() : Boolean
+    {
+        return if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R) {
+            Environment.isExternalStorageManager()
+        } else {
+            val readExternalStoragePermission:Int = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            readExternalStoragePermission == PackageManager.PERMISSION_GRANTED
+        }
+
+    }
+
+    private fun takePermission()
+    {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
+            try {
+                val intent = Intent()
+                intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                startActivityForResult(intent, 100)
+            }catch (ex : Exception)
+            {
+                val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+                intent.addCategory("android.intent.category.DEFAULT")
+                intent.data = Uri.parse(String.format("package:%s", applicationContext.packageName))
+                startActivityForResult(intent, 100)
+            }
+        }
+        else
+        {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) , 101)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 101) {
+                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
+                    if (Environment.isExternalStorageManager()){
+                        Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show()
+                    } else{
+                        takePermission()
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (grantResults.isNotEmpty()) {
+            val readExternalStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (readExternalStorage) {
+                Toast.makeText(this, "Permission Granted on 11", Toast.LENGTH_LONG).show()
+            }else{
+                takePermission()
+            }
+        }
     }
 
 
@@ -142,6 +197,7 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
 
         val wb:Workbook = HSSFWorkbook()
         val sheet: Sheet = wb.createSheet("Name of sheet")
+        sheet.horizontallyCenter = true
         var cell: Cell? = null
         val row: Row = sheet.createRow(0)
         cell = row.createCell(0)
@@ -155,13 +211,13 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
         sheet.setColumnWidth(2, 15 * 500)
         cell = row.createCell(3)
         cell.setCellValue("عنوان الولد")
-        sheet.setColumnWidth(3, 15 * 500)
+        sheet.setColumnWidth(3, 15 * 800)
         cell = row.createCell(4)
         cell.setCellValue("السنه الدراسيه")
-        sheet.setColumnWidth(3, 15 * 500)
+        sheet.setColumnWidth(4, 15 * 500)
         cell = row.createCell(5)
         cell.setCellValue("اب الاعتراف")
-        sheet.setColumnWidth(3, 15 * 500)
+        sheet.setColumnWidth(5, 15 * 500)
         for (i in 1 until childrenList.size) {
             val row: Row = sheet.createRow(i)
             cell = row.createCell(0)
@@ -175,23 +231,20 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
             sheet.setColumnWidth(2, 15 * 500)
             cell = row.createCell(3)
             cell.setCellValue(childrenList[i].childAddress)
-            sheet.setColumnWidth(3, 15 * 500)
+            sheet.setColumnWidth(3, 15 * 800)
             cell = row.createCell(4)
             cell.setCellValue(childrenList[i].childSchoolYear)
-            sheet.setColumnWidth(3, 15 * 500)
+            sheet.setColumnWidth(4, 15 * 500)
             cell = row.createCell(5)
             cell.setCellValue(childrenList[i].childAbouna)
-            sheet.setColumnWidth(3, 15 * 500)
+            sheet.setColumnWidth(5, 15 * 500)
         }
         val file = File(getExternalFilesDir(null),
-            meetingName+".xls")
+            meetingName + ".xls")
         var outputStream: FileOutputStream? = null
         try {
             outputStream = FileOutputStream(file)
             wb.write(outputStream)
-            Toast.makeText(this,
-                "Excell Sheet Created With Choir Name!",
-                Toast.LENGTH_LONG).show()
         } catch (e: IOException) {
             e.printStackTrace()
             Toast.makeText(this, "Error!", Toast.LENGTH_LONG).show()
