@@ -29,4 +29,5 @@ class DatabaseHelper @Inject constructor(private var databaseDao: DatabaseDao) {
 
     suspend fun insertAttendanceRef(attendanceChildrenRef: List<AttendanceChildrenRef>) = databaseDao.insertChildrenInAttendance(attendanceChildrenRef)
 
+    suspend fun deleteAllChildrenInMeeting(choirId:Int) = databaseDao.deleteAllChildrenInMeeting(choirId)
 }

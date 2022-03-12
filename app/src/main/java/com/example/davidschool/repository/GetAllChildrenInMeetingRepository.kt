@@ -12,4 +12,8 @@ class GetAllChildrenInMeetingRepository @Inject constructor(private val database
     fun getAllChildren (meetId: Int) : Flow<List<Child>> = flow {
         emit(databaseHelper.getAllChildrenInMeeting(meetId))
     }.flowOn(Dispatchers.IO)
+
+    fun deleteAllChildren(choirId:Int) = flow {
+        emit(databaseHelper.deleteAllChildrenInMeeting(choirId))
+    }.flowOn(Dispatchers.IO)
 }

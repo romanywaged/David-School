@@ -32,4 +32,21 @@ constructor(private val getAllChildrenInMeetingRepository: GetAllChildrenInMeeti
             }
     }
 
+    private val dataStateFlow : MutableStateFlow<DataState>
+            = MutableStateFlow(DataState.Empty)
+    val stateFlowData: StateFlow<DataState> = dataStateFlow
+
+    fun deleteAllChildren(choirId: Int) = viewModelScope.launch {
+        dataStateFlow.value = DataState.Loading
+        getAllChildrenInMeetingRepository.deleteAllChildren(choirId)
+            .catch { e ->
+                dataStateFlow.value = DataState.Failure(e)
+            }
+            .collect {
+                dataStateFlow.value = DataState.SuccessDeleteAllChildren
+            }
+    }
+
+
+
 }

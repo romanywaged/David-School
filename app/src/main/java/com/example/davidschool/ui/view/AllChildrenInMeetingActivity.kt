@@ -1,6 +1,7 @@
 package com.example.davidschool.ui.view
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,7 +10,9 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
+import android.view.Menu
 import android.view.MenuItem
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +25,7 @@ import com.example.davidschool.database.model.Child
 import com.example.davidschool.ui.adapter.ChildrenAdapter
 import com.example.davidschool.ui.adapter.OnChildClick
 import com.example.davidschool.ui.viewmodel.GetAllChildrenInMeetingViewModel
+import com.example.davidschool.utils.CommonMethod
 import com.example.davidschool.utils.DataState
 import dagger.hilt.android.AndroidEntryPoint
 import de.hdodenhof.circleimageview.CircleImageView
@@ -45,7 +49,7 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
     private lateinit var childrenAdapter: ChildrenAdapter
     private lateinit var childrenList: ArrayList<Child>
     private val getAllChildrenInMeetingViewModel:GetAllChildrenInMeetingViewModel by viewModels()
-    private val code = 1000
+    private lateinit var commonMethod: CommonMethod
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +59,7 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
         meetingId = intent.extras!!.getInt("meetingId")
 
         childrenList = ArrayList()
+        commonMethod = CommonMethod(this)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
@@ -66,9 +71,6 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE),
             PackageManager.PERMISSION_GRANTED)
-
-        takePermissions()
-
 
     }
 
@@ -122,9 +124,9 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
             if (requestCode == 101) {
                 if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
                     if (Environment.isExternalStorageManager()){
-                        Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show()
+                        takePermissions()
                     } else{
-                        takePermission()
+                        takePermissions()
                     }
                 }
             }
@@ -136,9 +138,9 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
         if (grantResults.isNotEmpty()) {
             val readExternalStorage = grantResults[0] == PackageManager.PERMISSION_GRANTED
             if (readExternalStorage) {
-                Toast.makeText(this, "Permission Granted on 11", Toast.LENGTH_LONG).show()
+                takePermissions()
             }else{
-                takePermission()
+                takePermissions()
             }
         }
     }
@@ -154,8 +156,8 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
                 when(it)
                 {
                     is DataState.SuccessGetAllChildren ->{
-                        setUpRecycleView(it.children)
-                        childrenList = it.children as ArrayList<Child>
+                        setUpRecycleView(it.children as ArrayList<Child>)
+                        childrenList = it.children
                     }
                     else ->{
 
@@ -164,7 +166,7 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
             }
         }
     }
-    private fun setUpRecycleView(children: List<Child>)
+    private fun setUpRecycleView(children: ArrayList<Child>)
     {
         childrenAdapter = ChildrenAdapter(this,children, this)
         children_in_meeting_rv.setHasFixedSize(true)
@@ -172,15 +174,6 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
         children_in_meeting_rv.adapter = childrenAdapter
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onChildClicked(child: Child, position: Int, circleImageView: CircleImageView?) {
 
@@ -211,7 +204,7 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
         sheet.setColumnWidth(2, 15 * 500)
         cell = row.createCell(3)
         cell.setCellValue("عنوان الولد")
-        sheet.setColumnWidth(3, 15 * 800)
+        sheet.setColumnWidth(3, 20 * 800)
         cell = row.createCell(4)
         cell.setCellValue("السنه الدراسيه")
         sheet.setColumnWidth(4, 15 * 500)
@@ -231,7 +224,7 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
             sheet.setColumnWidth(2, 15 * 500)
             cell = row.createCell(3)
             cell.setCellValue(childrenList[i].childAddress)
-            sheet.setColumnWidth(3, 15 * 800)
+            sheet.setColumnWidth(3, 20 * 800)
             cell = row.createCell(4)
             cell.setCellValue(childrenList[i].childSchoolYear)
             sheet.setColumnWidth(4, 15 * 500)
@@ -240,14 +233,16 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
             sheet.setColumnWidth(5, 15 * 500)
         }
         val file = File(getExternalFilesDir(null),
-            meetingName + ".xls")
+            "$meetingName.xls"
+        )
         var outputStream: FileOutputStream? = null
         try {
             outputStream = FileOutputStream(file)
             wb.write(outputStream)
+            commonMethod.showMessage("تم انشاء الشيت بأسم المجموعه")
         } catch (e: IOException) {
             e.printStackTrace()
-            Toast.makeText(this, "Error!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "حدث خطأ", Toast.LENGTH_LONG).show()
             try {
                 outputStream!!.close()
             } catch (ex: IOException) {
@@ -255,6 +250,63 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
             }
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val searchItem = menu!!.findItem(R.id.searchChildren)
+        val searchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                childrenAdapter.filter.filter(newText)
+                return false
+            }
+        })
+        return true
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.deleteAll -> {
+                deleteAllChildrenInMeeting(meetingId)
+                return true
+            }
+            R.id.createExcell -> {
+                takePermissions()
+                return true
+            }
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun deleteAllChildrenInMeeting(choirId :Int)
+    {
+        getAllChildrenInMeetingViewModel.deleteAllChildren(choirId)
+        lifecycleScope.launchWhenStarted {
+            getAllChildrenInMeetingViewModel.stateFlowData.collect {
+                when(it)
+                {
+                    is DataState.SuccessDeleteAllChildren ->{
+                        commonMethod.showMessage("تم المسح")
+                        childrenList.clear()
+                        childrenAdapter.notifyDataSetChanged()
+                    }
+                    else ->{
+
+                    }
+                }
+            }
+        }
     }
 
 

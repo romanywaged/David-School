@@ -15,6 +15,9 @@ interface DatabaseDao {
     @Query("SELECT * FROM child_table WHERE child_class_id = :class_id")
     suspend fun getAllChildrenInClass(class_id:Int) :List<Child>
 
+    @Query("DELETE FROM child_table where child_class_id =:childId")
+    suspend fun deleteAllChildrenInMeeting(childId: Int)
+
     //############################################ Meeting ###########################################
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

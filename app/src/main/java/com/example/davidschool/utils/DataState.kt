@@ -26,4 +26,6 @@ sealed class DataState  {
     object  SuccessAddAttendanceDayRef : DataState()
 
     class  SuccessGetAllAttendancesInMeeting(val attendances:List<Attendance>) : DataState()
+
+    object SuccessDeleteAllChildren : DataState()
 }
