@@ -1,6 +1,7 @@
 package com.example.davidschool.utils
 
 import com.example.davidschool.database.model.Attendance
+import com.example.davidschool.database.model.AttendanceWithChildren
 import com.example.davidschool.database.model.Child
 import com.example.davidschool.database.model.Khedma
 
@@ -20,6 +21,8 @@ sealed class DataState  {
     class  SuccessGetAllMeetings(val meetings: List<Khedma>) : DataState()
 
     class  SuccessGetAllChildren(val children: List<Child>) : DataState()
+
+    class  SuccessGetAllChildrenInAttendance(val children: List<AttendanceWithChildren>) : DataState()
 
     class  SuccessAddAttendanceDay(val id:Long) : DataState()
 

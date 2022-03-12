@@ -1,9 +1,6 @@
 package com.example.davidschool.database
 
-import com.example.davidschool.database.model.Attendance
-import com.example.davidschool.database.model.AttendanceChildrenRef
-import com.example.davidschool.database.model.Child
-import com.example.davidschool.database.model.Khedma
+import com.example.davidschool.database.model.*
 import javax.inject.Inject
 
 
@@ -19,7 +16,7 @@ class DatabaseHelper @Inject constructor(private var databaseDao: DatabaseDao) {
 
     suspend fun getLastMeetingId() = databaseDao.getLastMeetingId()
 
-    suspend fun getAllChildren(dayId: Int) = databaseDao.getAllChildrenInDay(dayId)
+    suspend fun getAllChildrenInAttendance(dayId: Int):List<AttendanceWithChildren> = databaseDao.getAllChildrenInDay(dayId)
 
     suspend fun getAllAttendancesWithChild(childId: Int) = databaseDao.getAllAttendancesWithChild(childId)
 

@@ -18,6 +18,7 @@ interface DatabaseDao {
     @Query("DELETE FROM child_table where child_class_id =:childId")
     suspend fun deleteAllChildrenInMeeting(childId: Int)
 
+
     //############################################ Meeting ###########################################
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
