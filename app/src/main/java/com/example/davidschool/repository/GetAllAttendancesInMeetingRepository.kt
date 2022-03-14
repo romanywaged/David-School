@@ -14,4 +14,8 @@ class GetAllAttendancesInMeetingRepository @Inject constructor(private val datab
         emit(databaseHelper.getAllAttendancesInMeeting(meetingId))
     }.flowOn(Dispatchers.IO)
 
+    suspend fun deleteAllAttendancesInMeeting(meetId: Int) = flow {
+        emit(databaseHelper.deleteAllAttendancesInMeeting(meetId))
+    }.flowOn(Dispatchers.IO)
+
 }

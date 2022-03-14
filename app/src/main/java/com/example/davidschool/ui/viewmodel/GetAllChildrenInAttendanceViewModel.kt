@@ -19,9 +19,9 @@ class GetAllChildrenInAttendanceViewModel @Inject constructor(private val getAll
             = MutableStateFlow(DataState.Empty)
     val stateFlowResponse: StateFlow<DataState> = responseStateFlow
 
-    fun getAllChildren(meetingId: Int) = viewModelScope.launch {
+    fun getAllChildren(dayId: Int) = viewModelScope.launch {
         responseStateFlow.value = DataState.Loading
-        getAllChildrenInAttendanceRepository.getAllChildrenInAttendance(meetingId)
+        getAllChildrenInAttendanceRepository.getAllChildrenInAttendance(dayId)
             .catch { e ->
                 responseStateFlow.value = DataState.Failure(e)
             }

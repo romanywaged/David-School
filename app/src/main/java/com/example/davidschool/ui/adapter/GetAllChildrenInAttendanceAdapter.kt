@@ -2,8 +2,6 @@ package com.example.davidschool.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.BitmapFactory
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,42 +10,39 @@ import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.example.davidschool.R
 import com.example.davidschool.database.model.Child
-import com.example.davidschool.ui.adapter.listener.OnChildClick
-import kotlinx.android.synthetic.main.child_row.view.*
+import kotlinx.android.synthetic.main.attendance_row.view.*
 import java.util.*
+import kotlin.collections.ArrayList
 
-class ChildrenAdapter constructor(private val context: Context, private val children:ArrayList<Child>, private val onChildClick: OnChildClick)
-    : RecyclerView.Adapter<ChildrenAdapter.MyChildrenViewHolder>(), Filterable{
+class GetAllChildrenInAttendanceAdapter
+constructor(private val context: Context, private val children:ArrayList<Child>) :
+    RecyclerView.Adapter<GetAllChildrenInAttendanceAdapter.MyChildrenAttendanceViewHolder>(),
+    Filterable {
     private lateinit var fade: Animation
     private val filterData:List<Child> = ArrayList(children)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChildrenAdapter.MyChildrenViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.child_row,parent, false)
-        return MyChildrenViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyChildrenAttendanceViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.attendance_row, parent, false)
+        return MyChildrenAttendanceViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ChildrenAdapter.MyChildrenViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyChildrenAttendanceViewHolder, position: Int) {
         fade = AnimationUtils.loadAnimation(context, R.anim.scale_anim)
-        holder.childCard.animation = fade
-        holder.childNameTxt.text = children[position].childName
-        holder.childPhoneTxt.text = children[position].childPhone
-        holder.childAddressTxt.text = children[position].childAddress
-        holder.childSchoolYearTxt.text = children[position].childSchoolYear
-
-        val imageBytes = Base64.decode(children[position].childPhoto, 0)
-        val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-        holder.childPhoto.load(image)
-
-        holder.childCard.setOnClickListener {
-            onChildClick.onChildClicked(children[position], position, holder.childPhoto)
-        }
+        holder.cardChild.animation = fade
+        holder.childName.text = children[position].childName
+        holder.checkBox.visibility = View.GONE
     }
 
     override fun getItemCount(): Int {
         return children.size
+    }
+
+    class MyChildrenAttendanceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        val childName = itemView.child_attendance_row_child_name!!
+        val checkBox = itemView.child_attendance_row_child_checkBox!!
+        val cardChild = itemView.child_row_card!!
     }
 
     override fun getFilter(): Filter {
@@ -79,17 +74,5 @@ class ChildrenAdapter constructor(private val context: Context, private val chil
             children.addAll(results.values as Collection<Child>)
             notifyDataSetChanged()
         }
-    }
-
-    class MyChildrenViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        var childNameTxt = itemView.child_row_name!!
-        var childPhoneTxt = itemView.child_row_child_phone!!
-        var childAddressTxt = itemView.child_row_child_address!!
-        var childSchoolYearTxt = itemView.child_row_school_year!!
-        var childCard = itemView.child_row_card!!
-        var childPhoto = itemView.child_row_child_icon!!
-
-        
-
     }
 }

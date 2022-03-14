@@ -1,9 +1,6 @@
 package com.example.davidschool.utils
 
-import com.example.davidschool.database.model.Attendance
-import com.example.davidschool.database.model.AttendanceWithChildren
-import com.example.davidschool.database.model.Child
-import com.example.davidschool.database.model.Khedma
+import com.example.davidschool.database.model.*
 
 sealed class DataState  {
     object Loading : DataState()
@@ -12,7 +9,7 @@ sealed class DataState  {
 
     object Empty : DataState()
 
-    object SuccessAddChild : DataState()
+    object SuccessChildOperation : DataState()
 
     object SuccessAddMeetings : DataState()
 
@@ -22,7 +19,7 @@ sealed class DataState  {
 
     class  SuccessGetAllChildren(val children: List<Child>) : DataState()
 
-    class  SuccessGetAllChildrenInAttendance(val children: List<AttendanceWithChildren>) : DataState()
+    class  SuccessGetAllChildrenInAttendance(val attendanceWithChildren: AttendanceWithChildren) : DataState()
 
     class  SuccessAddAttendanceDay(val id:Long) : DataState()
 
@@ -30,5 +27,13 @@ sealed class DataState  {
 
     class  SuccessGetAllAttendancesInMeeting(val attendances:List<Attendance>) : DataState()
 
+    class SuccessGetAllAttendancesToChild(val childrenWithAttendance: ChildrenWithAttendance) : DataState()
+
     object SuccessDeleteAllChildren : DataState()
+
+    object SuccessChildUpdated : DataState()
+
+    object SuccessAttendancesDeleted : DataState()
+
+    object SuccessUpdateTotalPoints : DataState()
 }

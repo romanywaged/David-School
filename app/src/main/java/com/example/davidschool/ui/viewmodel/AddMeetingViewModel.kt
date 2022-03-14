@@ -28,7 +28,7 @@ class AddMeetingViewModel
                 responseStateFlow.value = DataState.Failure(e)
             }
             .collect {
-                responseStateFlow.value = DataState.SuccessAddChild
+                responseStateFlow.value = DataState.SuccessChildOperation
             }
     }
 

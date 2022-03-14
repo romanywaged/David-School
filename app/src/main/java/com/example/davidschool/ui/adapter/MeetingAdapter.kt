@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.davidschool.R
 import com.example.davidschool.database.model.Khedma
+import com.example.davidschool.ui.adapter.listener.OnMeetingClick
 import kotlinx.android.synthetic.main.meeting_row.view.*
 
 class MeetingAdapter constructor(private var context: Context, private var meetings:List<Khedma>, private var onMeetingClick: OnMeetingClick)

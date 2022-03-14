@@ -15,6 +15,15 @@
         <item name="android:statusBarColor" tools:targetApi="lollipop">@color/purple_200</item>
     </style>
     <style name="AllChildren" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">@color/red</item>
+        <item name="colorAccent">@color/red</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:itemTextAppearance">@style/myCustomMenuTextAppearance</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/red</item>
+    </style>
+
+    <style name="profileTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorPrimary</item>

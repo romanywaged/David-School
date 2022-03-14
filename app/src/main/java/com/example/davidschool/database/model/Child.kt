@@ -38,4 +38,7 @@ class Child : Serializable {
 
     @ColumnInfo(name = "child_class_id")
     var childClassId: Int = 0
+
+    @ColumnInfo(name = "child_points")
+    var childPoints: Int = 0
 }

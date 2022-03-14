@@ -2,14 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/deleteAll"
-        android:title="delete All Children"
+        android:title="@string/deleteAll"
+        android:icon="@drawable/ic_delete"
         app:showAsAction="never"/>
     <item android:id="@+id/createExcell"
-        android:title="Create Excell Sheet"
+        android:title="@string/create_ecxel_sheet"
         app:showAsAction="never"
+        android:icon="@drawable/ic_save"
         />
     <item android:id="@+id/searchChildren"
-        android:title="Search"
+        android:title="@string/empty"
         android:icon="@drawable/ic_search"
         app:showAsAction="ifRoom"
         app:actionViewClass="android.widget.SearchView"/>

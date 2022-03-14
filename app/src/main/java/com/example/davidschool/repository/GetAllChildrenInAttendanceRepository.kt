@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class GetAllChildrenInAttendanceRepository @Inject constructor(private val databaseHelper: DatabaseHelper) {
 
-    fun getAllChildrenInAttendance(dayID :Int) : Flow<List<AttendanceWithChildren>> = flow {
+    fun getAllChildrenInAttendance(dayID :Int) : Flow<AttendanceWithChildren> = flow {
         emit(databaseHelper.getAllChildrenInAttendance(dayID))
     }.flowOn(Dispatchers.IO)
 

@@ -5,7 +5,6 @@
     <string name="person_name">اسم المخدوم..</string>
     <string name="phone_number">رقم الهاتف..</string>
     <string name="school_year">السنه الدراسيه..</string>
-    <string name="notes">ملاحظات...</string>
     <string name="add">اضافه</string>
     <string name="first">حضانه [الشاروبيم]</string>
     <string name="second">اولى وتانيه [السيرافيم]</string>
@@ -20,7 +19,7 @@
     <string name="add_class_desc">معلومات عن الكنيسه والمدرسه</string>
     <string name="attendance_list">قائمة الحضور</string>
     <string name="attendance_desc">اخذ الحضور اليومى للخدمه</string>
-    <string name="parent_phone_number">رقم تليفون الوالد..</string>
+    <string name="parent_phone_number">رقم تليفون الوالد</string>
     <string name="child_address">عنوان المخدوم..</string>
     <string name="child_abouna">اب الاعتراف..</string>
     <string name="three_year">خامسه</string>
@@ -28,4 +27,12 @@
     <string name="add_attendance_desc">اضف حضور اليوم</string>
     <string name="empty">-------</string>
     <string name="empty_list">لا يوجد بيانات</string>
+    <string name="update">تعديل البيانات</string>
+    <string name="delete">حذف البيانات</string>
+    <string name="update_your_data">قم بتعديل البيانات</string>
+    <string name="update_child_data">عدل بيانات مخدومك</string>
+    <string name="update_btn">تعديل</string>
+    <string name="deleteAll">مسح الكل</string>
+    <string name="create_ecxel_sheet">تصدير اكسيل شيت</string>
+    <string name="secondary">تانيه ثانوى</string>
 </resources>

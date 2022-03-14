@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -13,6 +12,7 @@ import android.provider.Settings
 import android.util.Base64
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -35,7 +35,6 @@ import com.karumi.dexter.listener.single.PermissionListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_child.*
 import kotlinx.coroutines.flow.collect
-import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 
 
@@ -73,11 +72,11 @@ class AddChildActivity : AppCompatActivity() {
             pictureDialog.setTitle("Select Action")
             val pictureDialogItem = arrayOf("Select photo from Gallery",
                 "Capture photo from Camera")
-            pictureDialog.setItems(pictureDialogItem) { dialog, which ->
+            pictureDialog.setItems(pictureDialogItem) { _, which ->
 
                 when (which) {
-                    0 -> gallery()
-                    1 -> camera()
+                    0 -> galleryCheckPermission()
+                    1 -> cameraCheckPermission()
                 }
             }
 
@@ -106,13 +105,15 @@ class AddChildActivity : AppCompatActivity() {
             }
 
             override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
-                commonMethod.showMessage("Permission Denied!")
+                Toast.makeText(this@AddChildActivity,
+                    "You have denied the storage permission to select image",
+                    Toast.LENGTH_SHORT
+                ).show()
                 showRotationalDialogForPermission()
             }
 
             override fun onPermissionRationaleShouldBeShown(
-                p0: PermissionRequest?, p1: PermissionToken?,
-            ) {
+                p0: PermissionRequest?, p1: PermissionToken?) {
                 showRotationalDialogForPermission()
             }
         }).onSameThread().check()
@@ -145,8 +146,7 @@ class AddChildActivity : AppCompatActivity() {
 
                     override fun onPermissionRationaleShouldBeShown(
                         p0: MutableList<PermissionRequest>?,
-                        p1: PermissionToken?,
-                    ) {
+                        p1: PermissionToken?) {
                         showRotationalDialogForPermission()
                     }
 
@@ -155,10 +155,35 @@ class AddChildActivity : AppCompatActivity() {
     }
 
 
+    private fun showRotationalDialogForPermission() {
+        AlertDialog.Builder(this)
+            .setMessage("It looks like you have turned off permissions"
+                    + "required for this feature. It can be enable under App settings!!!")
+
+            .setPositiveButton("Go TO SETTINGS") { _, _ ->
+
+                try {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    startActivity(intent)
+
+                } catch (e: ActivityNotFoundException) {
+                    e.printStackTrace()
+                }
+            }
+
+            .setNegativeButton("CANCEL") { dialog, _ ->
+                dialog.dismiss()
+            }.show()
+    }
+
+
     private fun camera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, CAMERA_REQUEST_CODE)
     }
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -208,30 +233,6 @@ class AddChildActivity : AppCompatActivity() {
             pickedImage = false
         }
 
-    }
-
-
-    private fun showRotationalDialogForPermission() {
-        AlertDialog.Builder(this)
-            .setMessage("It looks like you have turned off permissions"
-                    + "required for this feature. It can be enable under App settings!!!")
-
-            .setPositiveButton("Go TO SETTINGS") { _, _ ->
-
-                try {
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts("package", packageName, null)
-                    intent.data = uri
-                    startActivity(intent)
-
-                } catch (e: ActivityNotFoundException) {
-                    e.printStackTrace()
-                }
-            }
-
-            .setNegativeButton("CANCEL") { dialog, _ ->
-                dialog.dismiss()
-            }.show()
     }
 
 
@@ -290,8 +291,8 @@ class AddChildActivity : AppCompatActivity() {
                         child_address.isEnabled = false
                         child_abouna.isEnabled = false
                     }
-                    is DataState.SuccessAddChild -> {
-                        commonMethod.showMessage("Success")
+                    is DataState.SuccessChildOperation -> {
+                        commonMethod.showMessage("تم الاضافة")
                         person_name.text!!.clear()
                         phone.text!!.clear()
                         school_year.text!!.clear()
@@ -328,7 +329,7 @@ class AddChildActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun bitmabToString(bitmap: Bitmap): String {
+    private fun bitmabToString(bitmap: Bitmap): String {
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
         val b = baos.toByteArray()

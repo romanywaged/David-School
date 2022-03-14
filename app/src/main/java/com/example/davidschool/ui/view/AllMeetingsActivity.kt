@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.davidschool.R
 import com.example.davidschool.database.model.Khedma
 import com.example.davidschool.ui.adapter.MeetingAdapter
-import com.example.davidschool.ui.adapter.OnMeetingClick
+import com.example.davidschool.ui.adapter.listener.OnMeetingClick
 import com.example.davidschool.ui.viewmodel.AllMeetingsViewModel
 import com.example.davidschool.utils.CommonMethod
 import com.example.davidschool.utils.DataState

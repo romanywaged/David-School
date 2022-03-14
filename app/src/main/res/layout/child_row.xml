@@ -48,7 +48,7 @@
             android:id="@+id/view2"
             android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
+            android:background="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -57,16 +57,18 @@
 
         <TextView
             android:id="@+id/child_row_school_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="10dp"
             android:text="@string/three_year"
+            android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/view2"
             app:layout_constraintEnd_toEndOf="@+id/view2"
             app:layout_constraintStart_toStartOf="@+id/view2"
             app:layout_constraintTop_toTopOf="@+id/view2"
-            app:layout_constraintVertical_bias="0.39" />
+            app:layout_constraintVertical_bias="0.48000002" />
 
         <TextView
             android:id="@+id/child_row_child_phone"
@@ -85,8 +87,8 @@
             android:id="@+id/child_row_child_address"
             android:layout_width="150dp"
             android:layout_height="20dp"
+            android:layout_marginEnd="7dp"
             android:text="21ش محمد عبد الصمد متفرع من سلامه عفيفى"
-            android:textAlignment="center"
             android:textColor="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/child_row_child_icon"

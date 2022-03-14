@@ -5,9 +5,10 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
@@ -20,17 +21,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KhedmaApp">
         <activity
-            android:name=".ui.view.GatAllAttendancesInMeetingActivity"
-            android:theme="@style/AllChildren"
+            android:name=".ui.view.UpdateChildActivity"
+            android:theme="@style/AddChildTheme"
             android:exported="false" />
+        <activity
+            android:name=".ui.view.GetAllChildrenInAttendanceDay"
+            android:exported="false"
+            android:theme="@style/profileTheme" />
+        <activity
+            android:name=".ui.view.GatAllAttendancesInMeetingActivity"
+            android:exported="false"
+            android:theme="@style/profileTheme" />
         <activity
             android:name=".ui.view.AddAttendanceActivity"
             android:exported="false"
-            android:theme="@style/AllChildren" />
+            android:theme="@style/profileTheme" />
         <activity
             android:name=".ui.view.ChildProfileActivity"
-            android:theme="@style/AllChildren"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/profileTheme" />
         <activity
             android:name=".ui.view.AllChildrenInMeetingActivity"
             android:exported="false"

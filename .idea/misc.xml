@@ -3,16 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/David-School/app/src/main/res/menu/main_menu.xml" value="0.209375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable-v24/dashboard_bg.xml" value="0.1175" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable-v24/regbtn_style.xml" value="0.1175" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable-v24/second_bg_dashboard.xml" value="0.1175" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable/ic_date.xml" value="0.1175" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable/ic_delete.xml" value="0.1175" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable/ic_home.xml" value="0.1175" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable/ic_notes.xml" value="0.1175" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable/ic_num_of_provat.xml" value="0.1175" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable/ic_phone.xml" value="0.1175" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable/ic_prem_identity.xml" value="0.1175" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable/ic_save.xml" value="0.1175" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/drawable/ic_school.xml" value="0.1175" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_add_attendance.xml" value="0.209375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_add_child.xml" value="0.134375" />
@@ -20,13 +21,20 @@
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_all_meetings.xml" value="0.15364583333333334" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_child_profile.xml" value="0.209375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_gat_all_attendances_in_meeting.xml" value="0.1" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_get_all_children_in_attendance_day.xml" value="0.12760416666666666" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_main.xml" value="0.209375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_meeting_dashboard.xml" value="0.1" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_splash_screen.xml" value="0.134375" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_update_child.xml" value="0.209375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/attendance_row.xml" value="0.209375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/attendances_in_meeting_row.xml" value="0.25" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/child_row.xml" value="0.22" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/meeting_row.xml" value="0.15364583333333334" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/menu/context_menu.xml" value="0.15364583333333334" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/menu/delete_nenu.xml" value="0.209375" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/menu/main_menu.xml" value="0.14114583333333333" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/menu/search_menu.xml" value="0.209375" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/menu/second_menu.xml" value="0.14114583333333333" />
       </map>
     </option>
   </component>

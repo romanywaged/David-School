@@ -1,4 +1,4 @@
-package com.example.davidschool.ui.adapter
+package com.example.davidschool.ui.adapter.listener
 
 import com.example.davidschool.database.model.Khedma
 

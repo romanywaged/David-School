@@ -18,6 +18,15 @@ interface DatabaseDao {
     @Query("DELETE FROM child_table where child_class_id =:childId")
     suspend fun deleteAllChildrenInMeeting(childId: Int)
 
+    @Update
+    suspend fun updateChild(child : Child)
+
+    @Delete
+    suspend fun deleteChild(child: Child)
+
+    @Query("UPDATE CHILD_TABLE SET child_points=:points where Child_Id=:childId")
+    suspend fun updateTotalPoints(points: Int, childId: Int)
+
 
     //############################################ Meeting ###########################################
 
@@ -40,13 +49,16 @@ interface DatabaseDao {
 
     @Transaction
     @Query("SELECT * FROM attendance_table where attendance_id =:dayId")
-    suspend fun getAllChildrenInDay(dayId : Int) : List<AttendanceWithChildren>
+    suspend fun getAllChildrenInDay(dayId : Int) : AttendanceWithChildren
 
     @Transaction
     @Query("SELECT * FROM child_table where Child_Id =:childId")
-    suspend fun getAllAttendancesWithChild(childId : Int) : List<ChildrenWithAttendance>
+    suspend fun getAllAttendancesWithChild(childId : Int) : ChildrenWithAttendance
 
     @Query("SELECT * FROM attendance_table where meetingId=:meetId")
     suspend fun getAllAttendancesInMeeting(meetId : Int) : List<Attendance>
+
+    @Query("DELETE FROM attendance_table where meetingId=:meetId")
+    suspend fun deleteAllattendancesInMeeting(meetId : Int)
 
 }

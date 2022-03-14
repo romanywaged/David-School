@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.davidschool.R
 import com.example.davidschool.database.model.Attendance
+import com.example.davidschool.ui.adapter.listener.OnAttendanceDayClicked
 import kotlinx.android.synthetic.main.attendances_in_meeting_row.view.*
 
 class GetAllAttendancesInMeetingAdapter
-constructor(private val context: Context, private val attendances:List<Attendance>) :
+constructor(private val context: Context, private val attendances:List<Attendance>, private val onAttendanceDayClicked: OnAttendanceDayClicked) :
 RecyclerView.Adapter<GetAllAttendancesInMeetingAdapter.MyAllAttendancesViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAllAttendancesViewHolder {
@@ -20,6 +21,9 @@ RecyclerView.Adapter<GetAllAttendancesInMeetingAdapter.MyAllAttendancesViewHolde
 
     override fun onBindViewHolder(holder: MyAllAttendancesViewHolder, position: Int) {
         holder.attendanceName.text = attendances[position].attendanceDate
+        holder.attendanceCard.setOnClickListener {
+            onAttendanceDayClicked.onAttendanceDayClick(attendances[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -28,6 +32,7 @@ RecyclerView.Adapter<GetAllAttendancesInMeetingAdapter.MyAllAttendancesViewHolde
     class MyAllAttendancesViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView)  {
 
         val attendanceName = itemView.attendace_in_meeting_row_name!!
+        val attendanceCard = itemView.attendance_row_card!!
 
     }
 }

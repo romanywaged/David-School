@@ -1,8 +1,12 @@
 package com.example.davidschool.ui.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
+import android.widget.CheckBox
+import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,25 +15,24 @@ import com.example.davidschool.database.model.Attendance
 import com.example.davidschool.database.model.AttendanceChildrenRef
 import com.example.davidschool.database.model.Child
 import com.example.davidschool.ui.adapter.AddChildrenInAttendanceAdapter
-import com.example.davidschool.ui.adapter.OnChildClick
+import com.example.davidschool.ui.adapter.listener.OnChildAttendanceClicked
 import com.example.davidschool.ui.viewmodel.AttendanceViewModel
 import com.example.davidschool.utils.CommonMethod
 import com.example.davidschool.utils.DataState
 import dagger.hilt.android.AndroidEntryPoint
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_add_attendance.*
 import kotlinx.coroutines.flow.collect
-import java.text.SimpleDateFormat
+import java.text.DateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 @AndroidEntryPoint
-class AddAttendanceActivity : AppCompatActivity(), OnChildClick{
+class AddAttendanceActivity : AppCompatActivity(), OnChildAttendanceClicked {
 
     private var meetingId:Int = 0
     private var meetingName:String = ""
-    private lateinit var childrenAdapterAddChildrenIn: AddChildrenInAttendanceAdapter
+    private lateinit var childrenAdapter: AddChildrenInAttendanceAdapter
     private val attendanceViewModel: AttendanceViewModel by viewModels()
     private lateinit var childMap:HashMap<Int, Child>
     private lateinit var commonMethod: CommonMethod
@@ -90,7 +93,8 @@ class AddAttendanceActivity : AppCompatActivity(), OnChildClick{
 
                     }
                     is DataState.SuccessAddAttendanceDayRef ->{
-                        commonMethod.showMessage("Success")
+                        commonMethod.showMessage("تم اضافة الحضور بنجاح")
+                        navigateToAllAttendancesDay()
                     }
                     else ->{
 
@@ -129,7 +133,7 @@ class AddAttendanceActivity : AppCompatActivity(), OnChildClick{
                 when(it)
                 {
                     is DataState.SuccessGetAllChildren ->{
-                        setUpRecycleView(it.children)
+                        setUpRecycleView(it.children as ArrayList)
                     }
                     else ->{
 
@@ -138,12 +142,12 @@ class AddAttendanceActivity : AppCompatActivity(), OnChildClick{
             }
         }
     }
-    private fun setUpRecycleView(children: List<Child>)
+    private fun setUpRecycleView(children: ArrayList<Child>)
     {
-        childrenAdapterAddChildrenIn = AddChildrenInAttendanceAdapter(children, this, this)
+        childrenAdapter = AddChildrenInAttendanceAdapter(children, this, this)
         add_attendance_rv.setHasFixedSize(true)
         add_attendance_rv.layoutManager = LinearLayoutManager(this)
-        add_attendance_rv.adapter = childrenAdapterAddChildrenIn
+        add_attendance_rv.adapter = childrenAdapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -157,24 +161,31 @@ class AddAttendanceActivity : AppCompatActivity(), OnChildClick{
     }
 
 
-    private fun getCurrentDate() : String
-    {
-        val sdf = SimpleDateFormat("dd/M/yyyy")
-        val currentDate = sdf.format(Date())
+    private fun getCurrentDate(): String {
+        val calender: Calendar = Calendar.getInstance()
 
-        return currentDate
+        return DateFormat.getDateInstance(DateFormat.FULL, Locale("AR")).format(calender.time)
 
     }
 
-    override fun onChildClicked(child: Child, position: Int, circleImageView: CircleImageView?) {
+    override fun onTakeAttendanceClick(child: Child, position: Int, checkBox: CheckBox) {
         if (childMap.containsKey(position))
         {
             childMap.remove(position)
+            checkBox.isChecked = false
         }
         else{
             childMap[position] = child
+            checkBox.isChecked = true
         }
     }
 
+    private fun navigateToAllAttendancesDay(){
+        val intent = Intent(this,GatAllAttendancesInMeetingActivity::class.java)
+        intent.putExtra("meetingId", meetingId)
+        intent.putExtra("meetingName", meetingName)
+        startActivity(intent)
+        finish()
+    }
 
 }
