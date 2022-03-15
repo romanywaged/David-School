@@ -32,6 +32,7 @@ import kotlin.math.sinh
 class ChildProfileActivity : AppCompatActivity() {
 
     private lateinit var child:Child
+    private l
     private val REQUEST_CALL = 1
     private val profileViewModel:ProfileViewModel by viewModels()
     private var lastAttend = ""
@@ -105,12 +106,17 @@ class ChildProfileActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.item_update ->{
-                moveToUpdate()
+                moveToUpdate(false)
                 true
             }
 
             R.id.item_delete ->{
                 deleteChild(child)
+                true
+            }
+
+            R.id.item_update_points ->{
+                moveToUpdate(true)
                 true
             }
 
@@ -174,14 +180,25 @@ class ChildProfileActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun moveToUpdate()
+    private fun moveToUpdate(pointsFlag : Boolean)
     {
-        val intent = Intent(this, UpdateChildActivity::class.java)
-        intent.putExtra("childObject", child)
-        intent.putExtra("meetingName", meetingName)
-        intent.putExtra("meetingId", meetingId)
-        startActivity(intent)
-        finish()
+
+        if (pointsFlag) {
+            val intent = Intent(this, UpdateTotalPointsActivity::class.java)
+            intent.putExtra("childObject", child)
+            intent.putExtra("meetingName", meetingName)
+            intent.putExtra("meetingId", meetingId)
+            startActivity(intent)
+            finish()
+        }
+        else{
+            val intent = Intent(this, UpdateChildActivity::class.java)
+            intent.putExtra("childObject", child)
+            intent.putExtra("meetingName", meetingName)
+            intent.putExtra("meetingId", meetingId)
+            startActivity(intent)
+            finish()
+        }
     }
 
 }

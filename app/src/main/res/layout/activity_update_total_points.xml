@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.view.UpdateTotalPointsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+      <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/child_update_points_img"
+        android:layout_width="175dp"
+        android:layout_height="175dp"
+        android:layout_marginTop="35dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/circleschoollogo"/>
+
+      <TextView
+        android:id="@+id/child_update_points_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:text="@string/fifth"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/child_update_points_allPoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:padding="20dp"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="20sp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:padding="20dp"
+            android:hint="@string/new_points"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/child_update_points_write_points"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/child_update_points_edit"
+            android:layout_width="160dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/regbtn_style"
+            android:text="@string/update_btn"
+            android:textSize="20sp"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</ScrollView>
