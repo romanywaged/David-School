@@ -37,4 +37,16 @@
     <string name="secondary">تانيه ثانوى</string>
     <string name="new_points">ادخل النقاط الجديده</string>
     <string name="update_points">تعديل النقاط</string>
+    <string name="choose_gellary">اختر من الصور</string>
+    <string name="take_photo">التقط صورة</string>
+    <string name="gender">اختر النوع</string>
+    <string name="shmas_notes">الرسامه بيد</string>
+    <string name="shmas_date">تاريخ الرسامه</string>
+    <string name="shmas_type">رتبة الرسامه</string>
+    <string name="meeting_name">اسم الفصل</string>
+
+    <string-array name="Gender">
+        <item>ولد</item>
+        <item>بنت</item>
+    </string-array>
 </resources>

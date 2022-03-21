@@ -21,9 +21,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KhedmaApp">
         <activity
-            android:name=".ui.view.UpdateTotalPointsActivity"
-            android:theme="@style/AllChildren"
+            android:name=".ui.view.AddMeetingActivity"
+            android:theme="@style/AllMeetingsTheme"
             android:exported="false" />
+        <activity
+            android:name=".ui.view.UpdateTotalPointsActivity"
+            android:exported="false"
+            android:theme="@style/AllChildren" />
         <activity
             android:name=".ui.view.UpdateChildActivity"
             android:exported="false"

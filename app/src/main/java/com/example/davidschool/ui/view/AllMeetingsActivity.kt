@@ -32,6 +32,13 @@ class AllMeetingsActivity : AppCompatActivity(), OnMeetingClick {
 
         getAllMeeting()
 
+
+        add_meeting_fab.setOnClickListener {
+            val intent = Intent(this, AddMeetingActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
     }
 
    private fun getAllMeeting()

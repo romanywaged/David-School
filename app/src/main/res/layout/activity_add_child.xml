@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Add_Person_Scroll"
     android:orientation="vertical"
     android:background="#fff"
@@ -26,32 +26,36 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:src="@drawable/circleschoollogo" />
+                android:src="@drawable/profile_image" />
 
             <TextView
-                android:id="@+id/first_tittle"
+                android:id="@+id/choose_gellary_add_child"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_your_data"
                 android:layout_marginStart="10dp"
-                android:layout_centerVertical="true"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:layout_marginTop="55dp"
                 android:layout_toStartOf="@id/icoon"
+                android:drawablePadding="15dp"
                 android:fontFamily="cursive"
-                android:layout_gravity="end"
-                android:textColor="@color/black"/>
+                android:text="@string/choose_gellary"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:drawableStartCompat="@drawable/ic_image" />
 
             <TextView
+                android:id="@+id/take_photo_tittle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_child_data"
+                android:text="@string/take_photo"
                 android:fontFamily="monospace"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:layout_below="@id/first_tittle"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/choose_gellary_add_child"
                 android:layout_toStartOf="@id/icoon"
-                android:textStyle="bold"/>
+                android:drawablePadding="33dp"
+                app:drawableStartCompat="@drawable/ic_baseline_photo_camera_24"
+                />
         </RelativeLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -123,6 +127,83 @@
                 android:inputType="textPersonName"
                 />
         </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_child_gender"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/gender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_tarnima_link_layout">
+
+            <AutoCompleteTextView
+                android:id="@+id/add_child_gender_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_if_boy_add_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_child_shmas_type"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:hint="@string/shmas_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_tarnima_link_layout">
+
+                <AutoCompleteTextView
+                    android:id="@+id/add_child_shmas_type_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    tools:ignore="LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="@string/shmas_date"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_child_shmas_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="@string/shmas_notes"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/add_child_shmas_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

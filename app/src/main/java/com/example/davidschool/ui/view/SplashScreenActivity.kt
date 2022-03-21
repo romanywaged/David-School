@@ -51,11 +51,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
         commonMethod = CommonMethod(this)
 
-        if (!checkShared()) {
-            saveShared()
-            addMeetings()
-        }
-
 
 
 
@@ -78,18 +73,6 @@ class SplashScreenActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun addMeetings()
-    {
-
-
-        meetings.add(Khedma(1,getString(R.string.first)))
-        meetings.add(Khedma(2,getString(R.string.second)))
-        meetings.add(Khedma(3,getString(R.string.third)))
-        meetings.add(Khedma(4,getString(R.string.fourth)))
-        meetings.add(Khedma(5,getString(R.string.fifth)))
-
-        insertMeetingsIntoDatabase(meetings)
-    }
 
     private fun insertMeetingsIntoDatabase(meetings: ArrayList<Khedma>) {
         addMeetingViewModel.addMeeting(meetings)
@@ -114,31 +97,6 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun getLastMeetingId()
-    {
-        lifecycleScope.launchWhenStarted {
-            addMeetingViewModel.stateFlowData.collect {
-                when(it)
-                {
-                    is DataState.Loading -> {
-
-                    }
-                    is DataState.Empty -> {
-
-                    }
-                    is DataState.Failure -> {
-
-                    }
-                    is DataState.SuccessIdMeeting -> {
-                        lastMeetingId = it.id
-                    }
-                    else -> {
-
-                    }
-                }
-            }
-        }
-    }
 
     private fun saveShared() {
         val editor = sharedPreferences.edit()

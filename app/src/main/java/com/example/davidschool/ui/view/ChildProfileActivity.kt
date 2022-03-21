@@ -10,8 +10,6 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -23,16 +21,14 @@ import com.example.davidschool.database.model.Child
 import com.example.davidschool.ui.viewmodel.ProfileViewModel
 import com.example.davidschool.utils.DataState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_add_child.*
 import kotlinx.android.synthetic.main.activity_child_profile.*
 import kotlinx.coroutines.flow.collect
-import kotlin.math.sinh
+
 
 @AndroidEntryPoint
 class ChildProfileActivity : AppCompatActivity() {
 
     private lateinit var child:Child
-    private l
     private val REQUEST_CALL = 1
     private val profileViewModel:ProfileViewModel by viewModels()
     private var lastAttend = ""
@@ -70,13 +66,12 @@ class ChildProfileActivity : AppCompatActivity() {
         supportActionBar!!.title = child.childName
 
         child_profile_parent_phone_number.setOnClickListener {
-            val phoneNumber = child_profile_parent_phone_number.text.toString()
-            makeCall(phoneNumber)
+            makeCall(child.childParentPhone)
         }
 
         child_profile_child_number.setOnClickListener {
-            val phoneNumber = child_profile_child_number.text.toString()
-            makeCall(phoneNumber)
+//            makeCall(child.childPhone)
+            sendMessage()
         }
 
     }
@@ -172,13 +167,6 @@ class ChildProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun moveToAllChildrenInMeeting() {
-        val intent = Intent(this, AllChildrenInMeetingActivity::class.java)
-        intent.putExtra("meetingId", meetingId)
-        intent.putExtra("meetingName", meetingName)
-        startActivity(intent)
-        finish()
-    }
 
     private fun moveToUpdate(pointsFlag : Boolean)
     {
@@ -200,5 +188,16 @@ class ChildProfileActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    private fun sendMessage(){
+        val phoneTxt = "02${child.childPhone}"
+        val msgText = "Hello"
+
+
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("http://api.whatsapp.com/send?phone=$phoneTxt&text=$msgText")
+        startActivity(intent)
+    }
+
 
 }
