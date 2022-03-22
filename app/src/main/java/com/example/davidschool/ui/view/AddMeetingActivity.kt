@@ -1,5 +1,6 @@
 package com.example.davidschool.ui.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -11,14 +12,18 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Base64
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.example.davidschool.R
+import com.example.davidschool.database.model.Khedma
 import com.example.davidschool.ui.viewmodel.AddMeetingViewModel
 import com.example.davidschool.utils.CommonMethod
+import com.example.davidschool.utils.DataState
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -30,6 +35,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_child.*
 import kotlinx.android.synthetic.main.activity_add_meeting.*
+import kotlinx.coroutines.flow.collect
 import java.io.ByteArrayOutputStream
 
 @AndroidEntryPoint
@@ -41,11 +47,13 @@ class AddMeetingActivity : AppCompatActivity() {
     private val GALLERY_REQUEST_CODE = 2
     private lateinit var bitmap: Bitmap
     private var pickedImage: Boolean = false
-    private var childPhoto:String = ""
+    private var meetingPhoto:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_meeting)
+
+        commonMethod = CommonMethod(this)
 
         choose_gellary_add_meeting.setOnClickListener {
             galleryCheckPermission()
@@ -55,8 +63,37 @@ class AddMeetingActivity : AppCompatActivity() {
             cameraCheckPermission()
         }
 
+        Add_btn_meeting.setOnClickListener {
+            val meetingName = add_meeting_meetingName.text.toString()
+            val meetingSchoolYear = add_meeting_meetingSchool_year.text.toString()
+
+            validateInputsToInsertMeeting(meetingName, meetingSchoolYear)
+        }
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.title = "اضافة فصل"
 
     }
+
+    private fun validateInputsToInsertMeeting(meetingName: String, meetingSchoolYear: String) {
+        if (meetingName.isEmpty() || meetingSchoolYear.isEmpty()) {
+            commonMethod.showMessage("اضف جميع البيانات")
+        }
+        else{
+            if (pickedImage){
+                val meeting = Khedma()
+                meeting.meetingName = meetingName
+                meeting.meetingSchoolYear = meetingSchoolYear
+                meeting.meetingPhoto = meetingPhoto
+                insertMeetingsIntoDatabase(meeting)
+            }
+            else{
+                commonMethod.showMessage("من فضلك اضف صورة")
+            }
+        }
+    }
+
 
     private fun galleryCheckPermission() {
 
@@ -168,7 +205,7 @@ class AddMeetingActivity : AppCompatActivity() {
                         transformations(CircleCropTransformation())
                     }
                     pickedImage = true
-                    childPhoto = bitmabToString(bitmap)
+                    meetingPhoto = bitmabToString(bitmap)
 
                 }
 
@@ -184,7 +221,7 @@ class AddMeetingActivity : AppCompatActivity() {
                         transformations(CircleCropTransformation())
                     }
                     pickedImage = true
-                    childPhoto = bitmabToString(bitmap)
+                    meetingPhoto = bitmabToString(bitmap)
                 }
 
             }
@@ -211,6 +248,49 @@ class AddMeetingActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
         val b = baos.toByteArray()
         return Base64.encodeToString(b, Base64.DEFAULT)
+    }
+
+    private fun insertMeetingsIntoDatabase(meeting: Khedma) {
+        addMeetingViewModel.addMeeting(meeting)
+        lifecycleScope.launchWhenStarted {
+            addMeetingViewModel.stateFlowResponse.collect {
+                when (it)
+                {
+                    is DataState.Loading -> {
+                       validateLoading(true)
+                    }
+                    is DataState.SuccessAddMeetings ->{
+                        validateLoading(false)
+                        commonMethod.showMessage("تم الاضافه")
+                    }
+                    is DataState.Failure -> {
+                        commonMethod.showMessage(it.msg.toString())
+                    }
+                    else ->{
+
+                    }
+                }
+            }
+        }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    fun validateLoading(isLoadig : Boolean){
+        if (isLoadig){
+            progress_Add_meeting.visibility = View.VISIBLE
+            Add_btn_meeting.visibility = View.INVISIBLE
+            add_meeting_meetingName.isEnabled = false
+            add_meeting_meetingSchool_year.isEnabled = false
+        }
+        else{
+            progress_Add_meeting.visibility = View.INVISIBLE
+            Add_btn_meeting.visibility = View.VISIBLE
+            add_meeting_meetingName.isEnabled = true
+            add_meeting_meetingSchool_year.isEnabled = true
+            meeting_icon.setImageDrawable(getDrawable(R.drawable.church))
+            add_meeting_meetingName.text!!.clear()
+            add_meeting_meetingSchool_year.text!!.clear()
+        }
     }
 
 

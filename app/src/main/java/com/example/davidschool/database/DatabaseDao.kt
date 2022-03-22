@@ -31,7 +31,7 @@ interface DatabaseDao {
     //############################################ Meeting ###########################################
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMeeting(meeting: List<Khedma>)
+    suspend fun insertMeeting(meeting: Khedma)
 
     @Query("SELECT * FROM KHEDMA_TABLE")
     suspend fun getAllMeetings() : List<Khedma>

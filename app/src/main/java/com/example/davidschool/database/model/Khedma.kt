@@ -5,12 +5,19 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "khedma_table")
-data class Khedma(
+class Khedma {
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "khedma_id")
-    var meetingId: Int,
+    var meetingId: Int = 0
 
 
     @ColumnInfo(name = "khedma_name")
-    var meetingName: String
-)
+    var meetingName: String = ""
+
+    @ColumnInfo(name = "khedma_school_year")
+    var meetingSchoolYear: String = ""
+
+    @ColumnInfo(name = "khedma_photo")
+    var meetingPhoto: String = ""
+}

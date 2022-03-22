@@ -1,10 +1,13 @@
 package com.example.davidschool.ui.adapter
 
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.davidschool.R
 import com.example.davidschool.database.model.Khedma
 import com.example.davidschool.ui.adapter.listener.OnMeetingClick
@@ -23,6 +26,9 @@ class MeetingAdapter constructor(private var context: Context, private var meeti
         holder.itemView.setOnClickListener {
             onMeetingClick.onClicked(meetings[position])
         }
+        val imageBytes = Base64.decode(meetings[position].meetingPhoto, 0)
+        val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        holder.meetingIcon.load(image)
     }
 
     override fun getItemCount(): Int {
@@ -34,6 +40,7 @@ class MeetingAdapter constructor(private var context: Context, private var meeti
 
         var meetingNameTxt = itemView.choir_row_name!!
         var meetingCard = itemView.meeting_row_card!!
+        var meetingIcon = itemView.meeting_row_icon!!
 
 
     }

@@ -8,7 +8,7 @@ class DatabaseHelper @Inject constructor(private var databaseDao: DatabaseDao) {
 
     suspend fun insertChild(child: Child) = databaseDao.insertChild(child)
 
-    suspend fun insertMeeting(meeting: List<Khedma>) = databaseDao.insertMeeting(meeting)
+    suspend fun insertMeeting(meeting:Khedma) = databaseDao.insertMeeting(meeting)
 
     suspend fun getAllChildrenInMeeting(meetingId : Int) = databaseDao.getAllChildrenInClass(meetingId)
 
