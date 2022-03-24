@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class AddMeetingRepository @Inject constructor(private var databaseHelper: DatabaseHelper) {
-    suspend fun insertMeeting(meetings: List<Khedma>) = flow {
-        emit(databaseHelper.insertMeeting(meetings))
+    suspend fun insertMeeting(meeting: Khedma) = flow {
+        emit(databaseHelper.insertMeeting(meeting))
     }.flowOn(Dispatchers.IO)
 
     suspend fun getLastMeetingId() : Flow<Int> = flow {

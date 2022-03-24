@@ -36,6 +36,7 @@ class ChildProfileActivity : AppCompatActivity() {
     private var meetingName = ""
     private var meetingId = 0
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_child_profile)
@@ -43,11 +44,8 @@ class ChildProfileActivity : AppCompatActivity() {
         child = intent.getSerializableExtra("childModel") as Child
         meetingName = intent.extras!!.getString("meetingName").toString()
         meetingId = intent.extras!!.getInt("meetingId")
-    }
 
-    @SuppressLint("SetTextI18n")
-    override fun onStart() {
-        super.onStart()
+
         getAllAttendancesToThisChild(child.id)
 
         val imageBytes = Base64.decode(child.childPhoto, 0)
@@ -85,6 +83,9 @@ class ChildProfileActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this,
                 arrayOf(Manifest.permission.CALL_PHONE),
                 REQUEST_CALL)
+            val dial = "tel:$number"
+            startActivity(Intent(Intent.ACTION_CALL, Uri.parse(dial)))
+
         } else {
             val dial = "tel:$number"
             startActivity(Intent(Intent.ACTION_CALL, Uri.parse(dial)))
@@ -173,7 +174,7 @@ class ChildProfileActivity : AppCompatActivity() {
 
         if (pointsFlag) {
             val intent = Intent(this, UpdateTotalPointsActivity::class.java)
-            intent.putExtra("childObject", child)
+            intent.putExtra("childModel", child)
             intent.putExtra("meetingName", meetingName)
             intent.putExtra("meetingId", meetingId)
             startActivity(intent)

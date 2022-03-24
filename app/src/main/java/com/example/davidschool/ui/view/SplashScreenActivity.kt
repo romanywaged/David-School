@@ -74,28 +74,6 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
 
-    private fun insertMeetingsIntoDatabase(meetings: ArrayList<Khedma>) {
-        addMeetingViewModel.addMeeting(meetings)
-        lifecycleScope.launchWhenStarted {
-            addMeetingViewModel.stateFlowResponse.collect {
-                when (it)
-                {
-                    is DataState.Loading -> {
-
-                    }
-                    is DataState.SuccessAddMeetings ->{
-                        commonMethod.showMessage("Success")
-                    }
-                    is DataState.Failure -> {
-                        commonMethod.showMessage(it.msg.toString())
-                    }
-                    else ->{
-
-                    }
-                }
-            }
-        }
-    }
 
 
     private fun saveShared() {

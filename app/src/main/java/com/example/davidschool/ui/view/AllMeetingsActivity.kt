@@ -30,15 +30,20 @@ class AllMeetingsActivity : AppCompatActivity(), OnMeetingClick {
 
         commonMethod = CommonMethod(this)
 
-        getAllMeeting()
-
 
         add_meeting_fab.setOnClickListener {
             val intent = Intent(this, AddMeetingActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
+
+        supportActionBar!!.title = "كل الفصول"
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        getAllMeeting()
     }
 
    private fun getAllMeeting()
@@ -58,6 +63,7 @@ class AllMeetingsActivity : AppCompatActivity(), OnMeetingClick {
            }
        }
    }
+
     private fun setUpRecycleView(meetings: List<Khedma>)
     {
         meetingAdapter = MeetingAdapter(this,meetings,this)

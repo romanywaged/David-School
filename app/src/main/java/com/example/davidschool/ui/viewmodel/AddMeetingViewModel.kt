@@ -21,14 +21,14 @@ class AddMeetingViewModel
             = MutableStateFlow(DataState.Empty)
     val stateFlowResponse: StateFlow<DataState> = responseStateFlow
 
-    fun addMeeting(meetings : List<Khedma>) = viewModelScope.launch {
+    fun addMeeting(meeting: Khedma) = viewModelScope.launch {
         responseStateFlow.value = DataState.Loading
-        addMeetingRepository.insertMeeting(meetings)
+        addMeetingRepository.insertMeeting(meeting)
             .catch { e ->
                 responseStateFlow.value = DataState.Failure(e)
             }
             .collect {
-                responseStateFlow.value = DataState.SuccessChildOperation
+                responseStateFlow.value = DataState.SuccessAddMeetings
             }
     }
 
