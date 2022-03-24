@@ -55,6 +55,7 @@ class AddMeetingActivity : AppCompatActivity() {
             cameraCheckPermission()
         }
 
+        commonMethod = CommonMethod(this)
 
     }
 
