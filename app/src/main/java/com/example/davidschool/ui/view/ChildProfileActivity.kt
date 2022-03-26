@@ -200,5 +200,4 @@ class ChildProfileActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
 }

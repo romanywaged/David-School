@@ -52,6 +52,10 @@ class AddAttendanceActivity : AppCompatActivity(), OnChildAttendanceClicked {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.title = meetingName
 
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         getAllChildren()
 

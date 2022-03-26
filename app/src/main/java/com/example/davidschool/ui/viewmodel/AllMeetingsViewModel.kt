@@ -31,4 +31,19 @@ class AllMeetingsViewModel @Inject constructor(private var allMeetingsRepository
             }
     }
 
+    private val dataStateFlow : MutableStateFlow<DataState>
+            = MutableStateFlow(DataState.Empty)
+    val stateFlowData: StateFlow<DataState> = dataStateFlow
+
+    fun deleteAllMeetings() = viewModelScope.launch {
+        dataStateFlow.value = DataState.Loading
+        allMeetingsRepository.deleteAllMeetings()
+            .catch { e ->
+                dataStateFlow.value = DataState.Failure(e)
+            }
+            .collect {
+                dataStateFlow.value = DataState.SuccessDeleteAllMeetings
+            }
+    }
+
 }
