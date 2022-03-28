@@ -1,8 +1,10 @@
 package com.example.davidschool.ui.view
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -78,4 +80,27 @@ class AllMeetingsActivity : AppCompatActivity(), OnMeetingClick {
         intent.putExtra("meetingName", meeting.meetingName)
         startActivity(intent)
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.deleteAll ->{
+                alertDelete()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun alertDelete() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            .setIcon(R.drawable.circleschoollogo)
+            .setMessage("هل انت متأكد من ان تريد حذف جميع البيانات")
+            .setTitle(getString(R.string.app_name))
+            .setPositiveButton("اريد الحذف") { dialog, _ ->
+//                deleteAllAttendances()
+                dialog.dismiss()
+            }.setNegativeButton("الغاء"
+            ) { dialog, _ -> dialog.dismiss() }
+        builder.create().show()
+    }
+
 }

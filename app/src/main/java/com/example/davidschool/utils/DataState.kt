@@ -36,4 +36,6 @@ sealed class DataState  {
     object SuccessAttendancesDeleted : DataState()
 
     object SuccessUpdateTotalPoints : DataState()
+
+    object SuccessDeleteAllMeetings : DataState()
 }
