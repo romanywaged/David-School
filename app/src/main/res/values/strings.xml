@@ -44,6 +44,7 @@
     <string name="shmas_date">تاريخ الرسامه</string>
     <string name="shmas_type">رتبة الرسامه</string>
     <string name="meeting_name">اسم الفصل</string>
+    <string name="shmas_or_not">اختر حالة الولد</string>
 
     <string-array name="Gender">
         <item>ولد</item>

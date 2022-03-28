@@ -118,6 +118,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:hint="@string/shmas_date"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/add_child_birthday"
+                android:layout_width="match_parent"
+                android:drawableEnd="@drawable/ic_date"
+                android:drawablePadding="10dp"
+                android:focusable="true"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:hint="@string/child_abouna"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
@@ -149,6 +164,28 @@
                 tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/add_child_shmas"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/shmas_or_not"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/add_tarnima_link_layout">
+        <AutoCompleteTextView
+            android:id="@+id/add_child_shmas_or_not"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="none"
+            tools:ignore="LabelFor" />
+    </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:id="@+id/linear_if_boy_add_child"
             android:layout_width="match_parent"
@@ -169,7 +206,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/add_tarnima_link_layout">
 
                 <AutoCompleteTextView
-                    android:id="@+id/add_child_shmas_type_text"
+                    android:id="@+id/add_child_shmas_degree_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -186,6 +223,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/add_child_shmas_date"
                     android:layout_width="match_parent"
+                    android:focusable="true"
+                    android:drawableEnd="@drawable/ic_date"
+                    android:padding="10dp"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
 

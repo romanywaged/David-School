@@ -55,6 +55,10 @@ class AddChildActivity : AppCompatActivity() {
     private lateinit var bitmap: Bitmap
     private var pickedImage: Boolean = false
     private var childPhoto:String = ""
+    private var isShmas = false
+    private var childStatus = ""
+    private var childGender = ""
+    private var childShmasDegree = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +81,8 @@ class AddChildActivity : AppCompatActivity() {
 
         add_child_gender_text.addTextChangedListener(textWatcher)
 
+        add_child_shmas_or_not.addTextChangedListener(shmasTextWatcher)
+
 
         choose_gellary_add_child.setOnClickListener {
             galleryCheckPermission()
@@ -87,6 +93,8 @@ class AddChildActivity : AppCompatActivity() {
         }
 
 
+        add_child_birthday.inputType = 0
+
         Add_btn.setOnClickListener {
             val childName = person_name.text.toString()
             val childPhone = phone.text.toString()
@@ -94,8 +102,13 @@ class AddChildActivity : AppCompatActivity() {
             val childAddress = child_address.text.toString()
             val childAbouna = child_abouna.text.toString()
             val childSchoolYear = school_year.text.toString()
+            val childBirthDate = add_child_birthday.text.toString()
+            val childShmasBy = add_child_shmas_notes.text.toString()
+            val childShmasDate = add_child_shmas_date.text.toString()
+            val childShmasDegree = add_child_shmas_degree_text.text.toString()
 
-            validateToInsertChildIntoDatabase(childName, childPhone, childSchoolYear,  childParentPhone, childAddress, childAbouna)
+            validateToInsertChildIntoDatabase(childName, childPhone, childSchoolYear,  childParentPhone,
+                childAddress, childAbouna, childBirthDate, childShmasBy, childShmasDate, childShmasDegree)
         }
     }
 
@@ -106,11 +119,32 @@ class AddChildActivity : AppCompatActivity() {
         }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             if(s.toString() == "ولد"){
+                childGender = s.toString()
+                add_child_shmas.visibility = View.VISIBLE
+            }
+            else
+            {
+                add_child_shmas.visibility = View.GONE
+                childStatus = s.toString()
+            }
+        }
+    }
+
+    private val shmasTextWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if(s.toString() == "تمت رسامته شماس"){
+                childStatus = s.toString()
                 linear_if_boy_add_child.visibility = View.VISIBLE
+                isShmas = true
             }
             else
             {
                 linear_if_boy_add_child.visibility = View.GONE
+                isShmas = false
             }
         }
     }
@@ -259,10 +293,14 @@ class AddChildActivity : AppCompatActivity() {
     private fun validateToInsertChildIntoDatabase(
         childName: String, childPhone: String, childSchoolYear: String,
         childParentPhone: String, childAddress: String, childAbouna: String,
+        childBirthDate: String, childShmasBy: String, childShmasDate: String, childShmasDegree: String
     )
+
+
     {
         if (childName.isEmpty() || childPhone.isEmpty() || childSchoolYear.isEmpty() ||
-                childAddress.isEmpty() || childAbouna.isEmpty() || childParentPhone.isEmpty())
+                childAddress.isEmpty() || childAbouna.isEmpty() || childParentPhone.isEmpty()||
+                childBirthDate.isEmpty() || childGender.isEmpty() || childStatus.isEmpty())
         {
             commonMethod.showMessage("اضف جميع البيانات")
         }
@@ -274,21 +312,29 @@ class AddChildActivity : AppCompatActivity() {
             }
             else
             {
-                if (pickedImage) {
-                    val child = Child()
-                    child.childName = childName
-                    child.childPhone = childPhone
-                    child.childSchoolYear = childSchoolYear
-                    child.childAbouna = childAbouna
-                    child.childAddress = childAddress
-                    child.childParentPhone = childParentPhone
-                    child.childPhoto = childPhoto
-                    child.childClassId = meetingId
-
-                    insertChildIntoDatabase(child)
+                if (isShmas){
+                    if (childShmasBy.isEmpty() || childShmasDate.isEmpty() || childShmasDegree.isEmpty()) {
+                        commonMethod.showMessage("اضف جميع البيانات")
+                    }
                 }
-                else{
-                    commonMethod.showMessage("من فضلك اختر صورة")
+                    if (pickedImage) {
+                        val child = Child()
+                        child.childName = childName
+                        child.childPhone = childPhone
+                        child.childSchoolYear = childSchoolYear
+                        child.childAbouna = childAbouna
+                        child.childAddress = childAddress
+                        child.childParentPhone = childParentPhone
+                        child.childPhoto = childPhoto
+                        child.childClassId = meetingId
+                        child.childBirthdate = childBirthDate
+                        child.childGender = childGender
+                        child.childShmasBy = childShmasBy
+
+                        insertChildIntoDatabase(child)
+                    }
+                    else{
+                        commonMethod.showMessage("من فضلك اختر صورة")
                 }
             }
         }
@@ -325,6 +371,8 @@ class AddChildActivity : AppCompatActivity() {
                         child_parent_phone.isEnabled = true
                         child_address.isEnabled = true
                         child_abouna.isEnabled = true
+                        pickedImage = false
+                        childPhoto = ""
                         icoon.setImageDrawable(getDrawable(R.drawable.circleschoollogo))
                         progress_Add.visibility = View.GONE
                         Add_btn.visibility = View.VISIBLE

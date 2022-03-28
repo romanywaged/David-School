@@ -41,4 +41,21 @@ class Child : Serializable {
 
     @ColumnInfo(name = "child_points")
     var childPoints: Int = 0
+
+    @ColumnInfo(name = "child_gender")
+    var childGender: String = ""
+
+    @ColumnInfo(name = "child_shmas_or_not")
+    var childShmasOrNot: String = ""
+
+    @ColumnInfo(name = "child_shmas_date")
+    var childShmasDate: String = ""
+
+    @ColumnInfo(name = "child_shmas_by")
+    var childShmasBy: String = ""
+
+    @ColumnInfo(name = "child_shmas_degree")
+    var childShmasDegree: String = ""
+
+
 }

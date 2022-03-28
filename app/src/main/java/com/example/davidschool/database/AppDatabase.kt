@@ -10,7 +10,7 @@ import com.example.davidschool.utils.DATABASE_NAME
 
 
 @Database(entities = [Child::class, Khedma::class, Attendance::class,
-    AttendanceChildrenRef::class], exportSchema = false, version = 8)
+    AttendanceChildrenRef::class], exportSchema = false, version = 9)
 
 abstract class AppDatabase : RoomDatabase(){
     abstract fun getDao() : DatabaseDao
