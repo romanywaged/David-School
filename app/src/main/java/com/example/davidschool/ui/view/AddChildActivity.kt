@@ -2,12 +2,15 @@ package com.example.davidschool.ui.view
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
@@ -17,8 +20,11 @@ import android.util.Base64
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -41,6 +47,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_add_child.*
 import kotlinx.coroutines.flow.collect
 import java.io.ByteArrayOutputStream
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -59,6 +66,9 @@ class AddChildActivity : AppCompatActivity() {
     private var childStatus = ""
     private var childGender = ""
     private var childShmasDegree = ""
+    private var shmasDateListener: OnDateSetListener? = null
+    private var birthdateListener: OnDateSetListener? = null
+    private var selectedDate  = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,12 +86,30 @@ class AddChildActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
         val genders = resources.getStringArray(R.array.Gender)
-        val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_items, genders)
-        add_child_gender_text.setAdapter(arrayAdapter)
+        val arrayAdapterGenders = ArrayAdapter(this, R.layout.dropdown_items, genders)
+        add_child_gender_text.setAdapter(arrayAdapterGenders)
+
+        val status = resources.getStringArray(R.array.Status)
+        val arrayAdapterStatus = ArrayAdapter(this, R.layout.dropdown_items, status)
+        add_child_shmas_or_not.setAdapter(arrayAdapterStatus)
+
+        val shmasDegrees = resources.getStringArray(R.array.shmas_degree)
+        val arrayAdapterShmasDegree = ArrayAdapter(this, R.layout.dropdown_items, shmasDegrees)
+        add_child_shmas_degree_text.setAdapter(arrayAdapterShmasDegree)
 
         add_child_gender_text.addTextChangedListener(textWatcher)
 
         add_child_shmas_or_not.addTextChangedListener(shmasTextWatcher)
+
+        add_child_birthday.inputType = 0
+
+        add_child_shmas_date.inputType  = 0
+
+            getDateforBirthDate()
+
+
+            getDateforShmasDate()
+
 
 
         choose_gellary_add_child.setOnClickListener {
@@ -92,8 +120,6 @@ class AddChildActivity : AppCompatActivity() {
             cameraCheckPermission()
         }
 
-
-        add_child_birthday.inputType = 0
 
         Add_btn.setOnClickListener {
             val childName = person_name.text.toString()
@@ -112,6 +138,68 @@ class AddChildActivity : AppCompatActivity() {
         }
     }
 
+    private fun getDateforShmasDate() {
+
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar[Calendar.YEAR]
+        val currentMonth = calendar[Calendar.MONTH]
+        val currentDay = calendar[Calendar.DAY_OF_MONTH]
+        add_child_shmas_date.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                this, android.R.style.Theme_Holo_Dialog_MinWidth,
+                shmasDateListener, currentYear, currentMonth, currentDay)
+            datePickerDialog.window!!
+                .setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+            datePickerDialog.show()
+        }
+
+        shmasDateListener =
+            OnDateSetListener { _: DatePicker?, year: Int, month: Int, dayOfMonth: Int ->
+
+                val newMonth = month + 1
+
+                selectedDate = if (newMonth < 10) {
+                    "$year-0$newMonth-$dayOfMonth"
+                } else {
+                    "$year-$newMonth-$dayOfMonth"
+                }
+                add_child_shmas_date.setText(selectedDate)
+                selectedDate = ""
+            }
+    }
+
+    private fun getDateforBirthDate() {
+
+        val calendar = Calendar.getInstance()
+        val currentYear = calendar[Calendar.YEAR - 3]
+        val currentMonth = calendar[Calendar.MONTH]
+        val currentDay = calendar[Calendar.DAY_OF_MONTH]
+        add_child_birthday.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(
+                this, android.R.style.Theme_Holo_Dialog_MinWidth,
+                birthdateListener, currentYear, currentMonth, currentDay)
+            datePickerDialog.window!!
+                .setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+            datePickerDialog.show()
+        }
+
+        birthdateListener =
+            OnDateSetListener { _: DatePicker?, year: Int, month: Int, dayOfMonth: Int ->
+
+                val newMonth = month + 1
+
+                selectedDate = if (newMonth < 10) {
+                    "$year-0$newMonth-$dayOfMonth"
+                } else {
+                    "$year-$newMonth-$dayOfMonth"
+                }
+                add_child_birthday.setText(selectedDate)
+                selectedDate = ""
+            }
+    }
+
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
         }
@@ -125,7 +213,15 @@ class AddChildActivity : AppCompatActivity() {
             else
             {
                 add_child_shmas.visibility = View.GONE
+                linear_if_boy_shmas_add_child.visibility = View.GONE
+                childGender = s.toString()
                 childStatus = s.toString()
+                childShmasDegree = s.toString()
+                isShmas = false
+                add_child_shmas_or_not.text!!.clear()
+                add_child_shmas_degree_text.text!!.clear()
+                add_child_shmas_date.text!!.clear()
+                add_child_shmas_notes.text!!.clear()
             }
         }
     }
@@ -138,16 +234,22 @@ class AddChildActivity : AppCompatActivity() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             if(s.toString() == "تمت رسامته شماس"){
                 childStatus = s.toString()
-                linear_if_boy_add_child.visibility = View.VISIBLE
+                linear_if_boy_shmas_add_child.visibility = View.VISIBLE
                 isShmas = true
             }
             else
             {
-                linear_if_boy_add_child.visibility = View.GONE
+                linear_if_boy_shmas_add_child.visibility = View.GONE
                 isShmas = false
+                add_child_shmas_degree_text.text!!.clear()
+                add_child_shmas_date.text!!.clear()
+                add_child_shmas_notes.text!!.clear()
             }
         }
     }
+
+
+
 
     private fun galleryCheckPermission() {
 
@@ -167,7 +269,8 @@ class AddChildActivity : AppCompatActivity() {
             }
 
             override fun onPermissionRationaleShouldBeShown(
-                p0: PermissionRequest?, p1: PermissionToken?) {
+                p0: PermissionRequest?, p1: PermissionToken?,
+            ) {
                 showRotationalDialogForPermission()
             }
         }).onSameThread().check()
@@ -200,7 +303,8 @@ class AddChildActivity : AppCompatActivity() {
 
                     override fun onPermissionRationaleShouldBeShown(
                         p0: MutableList<PermissionRequest>?,
-                        p1: PermissionToken?) {
+                        p1: PermissionToken?,
+                    ) {
                         showRotationalDialogForPermission()
                     }
 
@@ -291,32 +395,58 @@ class AddChildActivity : AppCompatActivity() {
 
 
     private fun validateToInsertChildIntoDatabase(
-        childName: String, childPhone: String, childSchoolYear: String,
-        childParentPhone: String, childAddress: String, childAbouna: String,
-        childBirthDate: String, childShmasBy: String, childShmasDate: String, childShmasDegree: String
-    )
-
-
-    {
+        childName: String,
+        childPhone: String,
+        childSchoolYear: String,
+        childParentPhone: String,
+        childAddress: String,
+        childAbouna: String,
+        childBirthDate: String,
+        childShmasBy: String,
+        childShmasDate: String,
+        childShmasDegree: String,
+    ) {
         if (childName.isEmpty() || childPhone.isEmpty() || childSchoolYear.isEmpty() ||
-                childAddress.isEmpty() || childAbouna.isEmpty() || childParentPhone.isEmpty()||
-                childBirthDate.isEmpty() || childGender.isEmpty() || childStatus.isEmpty())
-        {
+            childAddress.isEmpty() || childAbouna.isEmpty() || childParentPhone.isEmpty() ||
+            childBirthDate.isEmpty() || childGender.isEmpty() || childStatus.isEmpty()
+        ) {
             commonMethod.showMessage("اضف جميع البيانات")
-        }
-        else
-        {
-            if (phone.text!!.length != 11 || child_parent_phone.text!!.length != 11)
-            {
+        } else {
+            if (phone.text!!.length != 11 || child_parent_phone.text!!.length != 11) {
                 commonMethod.showMessage("اضف رقم تليفون حقيقى")
-            }
-            else
-            {
-                if (isShmas){
+            } else {
+                if (isShmas) {
                     if (childShmasBy.isEmpty() || childShmasDate.isEmpty() || childShmasDegree.isEmpty()) {
-                        commonMethod.showMessage("اضف جميع البيانات")
+                        commonMethod.showMessage("اضف بيانات الرسامه")
+                    } else {
+                        if (pickedImage) {
+                            if(childBirthDate != childShmasDate) {
+                                val child = Child()
+                                child.childName = childName
+                                child.childPhone = childPhone
+                                child.childSchoolYear = childSchoolYear
+                                child.childAbouna = childAbouna
+                                child.childAddress = childAddress
+                                child.childParentPhone = childParentPhone
+                                child.childPhoto = childPhoto
+                                child.childClassId = meetingId
+                                child.childBirthdate = childBirthDate
+                                child.childGender = childGender
+                                child.childShmasBy = childShmasBy
+                                child.childShmasDate = childShmasDate
+                                child.childShmasDegree = childShmasDate
+                                child.childShmasOrNot = childStatus
+
+                                insertChildIntoDatabase(child)
+                            }else{
+                                commonMethod.showMessage("تاريخ الرسامه مماثل لتاريخ الميلاد !")
+                            }
+                        } else {
+                            commonMethod.showMessage("من فضلك اختر صورة")
+                        }
+
                     }
-                }
+                }else{
                     if (pickedImage) {
                         val child = Child()
                         child.childName = childName
@@ -329,12 +459,12 @@ class AddChildActivity : AppCompatActivity() {
                         child.childClassId = meetingId
                         child.childBirthdate = childBirthDate
                         child.childGender = childGender
-                        child.childShmasBy = childShmasBy
+                        child.childShmasOrNot= childStatus
 
                         insertChildIntoDatabase(child)
-                    }
-                    else{
+                    } else {
                         commonMethod.showMessage("من فضلك اختر صورة")
+                    }
                 }
             }
         }
@@ -348,35 +478,10 @@ class AddChildActivity : AppCompatActivity() {
                 when(it)
                 {
                     is DataState.Loading ->{
-                        progress_Add.visibility = View.VISIBLE
-                        Add_btn.visibility = View.GONE
-                        person_name.isEnabled = false
-                        phone.isEnabled = false
-                        school_year.isEnabled = false
-                        child_parent_phone.isEnabled = false
-                        child_address.isEnabled = false
-                        child_abouna.isEnabled = false
+                        enableItemsIfLoading(true)
                     }
                     is DataState.SuccessChildOperation -> {
-                        commonMethod.showMessage("تم الاضافة")
-                        person_name.text!!.clear()
-                        phone.text!!.clear()
-                        school_year.text!!.clear()
-                        child_parent_phone.text!!.clear()
-                        child_address.text!!.clear()
-                        child_abouna.text!!.clear()
-                        person_name.isEnabled = true
-                        phone.isEnabled = true
-                        school_year.isEnabled = true
-                        child_parent_phone.isEnabled = true
-                        child_address.isEnabled = true
-                        child_abouna.isEnabled = true
-                        pickedImage = false
-                        childPhoto = ""
-                        icoon.setImageDrawable(getDrawable(R.drawable.circleschoollogo))
-                        progress_Add.visibility = View.GONE
-                        Add_btn.visibility = View.VISIBLE
-
+                        enableItemsIfLoading(false)
                     }
                     else ->
                     {
@@ -404,4 +509,58 @@ class AddChildActivity : AppCompatActivity() {
         return Base64.encodeToString(b, Base64.DEFAULT)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun enableItemsIfLoading(isLoading:Boolean){
+        if (isLoading){
+            progress_Add.visibility = View.VISIBLE
+            Add_btn.visibility = View.GONE
+            person_name.isEnabled = false
+            phone.isEnabled = false
+            school_year.isEnabled = false
+            child_parent_phone.isEnabled = false
+            child_address.isEnabled = false
+            child_abouna.isEnabled = false
+            add_child_birthday.isEnabled = false
+            add_child_gender.isEnabled = false
+            add_child_shmas.isEnabled = false
+            add_child_shmas_type.isEnabled = false
+            add_child_shmas_date.isEnabled = false
+            add_child_shmas_notes.isEnabled = false
+        }else{
+            commonMethod.showMessage("تم الاضافة")
+            person_name.text!!.clear()
+            phone.text!!.clear()
+            school_year.text!!.clear()
+            child_parent_phone.text!!.clear()
+            child_address.text!!.clear()
+            child_abouna.text!!.clear()
+            add_child_birthday.text!!.clear()
+            add_child_gender_text.text!!.clear()
+            add_child_shmas_or_not.text!!.clear()
+            add_child_shmas_degree_text.text!!.clear()
+            add_child_shmas_date.text!!.clear()
+            add_child_shmas_notes.text!!.clear()
+            person_name.isEnabled = true
+            phone.isEnabled = true
+            school_year.isEnabled = true
+            child_parent_phone.isEnabled = true
+            child_address.isEnabled = true
+            child_abouna.isEnabled = true
+            add_child_birthday.isEnabled = true
+            add_child_gender.isEnabled = true
+            add_child_shmas.isEnabled = true
+            add_child_shmas_type.isEnabled = true
+            add_child_shmas_date.isEnabled = true
+            add_child_shmas_notes.isEnabled = true
+            pickedImage = false
+            childPhoto = ""
+            childGender = ""
+            childStatus = ""
+            isShmas = false
+            childShmasDegree = ""
+            icoon.setImageDrawable(getDrawable(R.drawable.circleschoollogo))
+            progress_Add.visibility = View.GONE
+            Add_btn.visibility = View.VISIBLE
+        }
+    }
 }

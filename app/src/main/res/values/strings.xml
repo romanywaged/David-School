@@ -45,9 +45,24 @@
     <string name="shmas_type">رتبة الرسامه</string>
     <string name="meeting_name">اسم الفصل</string>
     <string name="shmas_or_not">اختر حالة الولد</string>
+    <string name="birthday_date">تاريخ الميلاد</string>
 
     <string-array name="Gender">
         <item>ولد</item>
         <item>بنت</item>
     </string-array>
+
+    <string-array name="Status">
+        <item>تمت رسامته شماس</item>
+        <item>لم تتم رسامته شماس</item>
+    </string-array>
+
+    <string-array name="shmas_degree">
+        <item>الابصالتس *المرتل *</item>
+        <item>الاناغنوستيس * القارىء *</item>
+        <item>الايبودياكون * مساعد شماس *</item>
+        <item>الدياكون * شماس كامل *</item>
+        <item>الارشيدياكون * رئيس شماسة *</item>
+    </string-array>
+
 </resources>
