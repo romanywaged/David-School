@@ -46,6 +46,7 @@
     <string name="meeting_name">اسم الفصل</string>
     <string name="shmas_or_not">اختر حالة الولد</string>
     <string name="birthday_date">تاريخ الميلاد</string>
+    <string name="total_points">عدد النقاط</string>
 
     <string-array name="Gender">
         <item>ولد</item>

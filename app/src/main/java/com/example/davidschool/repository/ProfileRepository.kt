@@ -18,4 +18,8 @@ class ProfileRepository @Inject constructor(private val databaseHelper: Database
         emit(databaseHelper.deleteChild(child))
     }.flowOn(Dispatchers.IO)
 
+    fun getChildById(childId:Int) : Flow<Child> = flow {
+        emit(databaseHelper.getChildById(childId))
+    }.flowOn(Dispatchers.IO)
+
 }

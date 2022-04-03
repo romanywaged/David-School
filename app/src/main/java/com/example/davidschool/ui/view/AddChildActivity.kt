@@ -172,9 +172,10 @@ class AddChildActivity : AppCompatActivity() {
     private fun getDateforBirthDate() {
 
         val calendar = Calendar.getInstance()
-        val currentYear = calendar[Calendar.YEAR - 3]
+        val currentYear = calendar[Calendar.YEAR] - 3
         val currentMonth = calendar[Calendar.MONTH]
         val currentDay = calendar[Calendar.DAY_OF_MONTH]
+        calendar.set(currentYear, currentMonth, currentDay)
         add_child_birthday.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
                 this, android.R.style.Theme_Holo_Dialog_MinWidth,
@@ -434,7 +435,7 @@ class AddChildActivity : AppCompatActivity() {
                                 child.childGender = childGender
                                 child.childShmasBy = childShmasBy
                                 child.childShmasDate = childShmasDate
-                                child.childShmasDegree = childShmasDate
+                                child.childShmasDegree = childShmasDegree
                                 child.childShmasOrNot = childStatus
 
                                 insertChildIntoDatabase(child)

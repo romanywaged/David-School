@@ -153,10 +153,10 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
         activityOptions = ActivityOptions.makeSceneTransitionAnimation(this,circleImageView,"SharedName")
 
         val intent: Intent = Intent(this, ChildProfileActivity::class.java)
-        intent.putExtra("childModel", child)
+        intent.putExtra("childId", child.id)
         intent.putExtra("meetingName", meetingName)
         intent.putExtra("meetingId", meetingId)
-        startActivity(intent,activityOptions.toBundle())
+        startActivity(intent)
     }
 
     private fun createExcellSheet() {

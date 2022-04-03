@@ -45,4 +45,22 @@ class ProfileViewModel @Inject constructor(private val profileRepository: Profil
                 dataStateFlow.value = DataState.SuccessChildOperation
             }
     }
+
+
+    private val selectChildStateFlow : MutableStateFlow<DataState>
+            = MutableStateFlow(DataState.Empty)
+    val stateFlowSelectChild: StateFlow<DataState> = selectChildStateFlow
+
+    fun selectChild(childId: Int) = viewModelScope.launch {
+        selectChildStateFlow.value = DataState.Loading
+        profileRepository.getChildById(childId)
+            .catch { e ->
+                selectChildStateFlow.value = DataState.Failure(e)
+            }
+            .collect {
+                selectChildStateFlow.value = DataState.SuccessGetChild(it)
+            }
+    }
+
+
 }

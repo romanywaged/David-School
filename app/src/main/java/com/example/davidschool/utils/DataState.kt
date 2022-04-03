@@ -1,5 +1,6 @@
 package com.example.davidschool.utils
 
+import android.provider.ContactsContract
 import com.example.davidschool.database.model.*
 
 sealed class DataState  {
@@ -38,4 +39,6 @@ sealed class DataState  {
     object SuccessUpdateTotalPoints : DataState()
 
     object SuccessDeleteAllMeetings : DataState()
+
+    class SuccessGetChild(val child: Child) : DataState()
 }

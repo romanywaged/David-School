@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -35,18 +37,61 @@ class ChildProfileActivity : AppCompatActivity() {
     private var numOfAttend = 0
     private var meetingName = ""
     private var meetingId = 0
+    private var childId = 0
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_child_profile)
 
-        child = intent.getSerializableExtra("childModel") as Child
+        childId = intent.extras!!.getInt("childId")
         meetingName = intent.extras!!.getString("meetingName").toString()
         meetingId = intent.extras!!.getInt("meetingId")
 
+        getChildById(childId)
 
-        getAllAttendancesToThisChild(child.id)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+
+        child_profile_parent_phone_number.setOnClickListener {
+            makeCall(child.childParentPhone)
+        }
+
+        child_profile_child_number.setOnClickListener {
+            makeCall(child.childPhone)
+//            sendMessage()
+        }
+
+    }
+
+    private fun getChildById(childId: Int) {
+        profileViewModel.selectChild(childId)
+        lifecycleScope.launchWhenStarted {
+            profileViewModel.stateFlowSelectChild.collect {
+                when(it){
+                    is DataState.Failure ->{
+                        Toast.makeText(this@ChildProfileActivity, "Nooo",Toast.LENGTH_LONG)
+                    }
+
+                    is DataState.SuccessGetChild ->{
+                        child = it.child as Child
+                        setUpChildViews(child)
+                    }
+                    else ->{
+
+                    }
+                }
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setUpChildViews(child: Child)
+    {
+        supportActionBar!!.title = child.childName
+
+        getAllAttendancesToThisChild(childId)
 
         val imageBytes = Base64.decode(child.childPhoto, 0)
         val image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
@@ -58,20 +103,22 @@ class ChildProfileActivity : AppCompatActivity() {
         child_profile_name.text = child.childName
         child_profile_school_year.text = child.childSchoolYear
         child_profile_parent_phone_number.text = getString(R.string.parent_phone_number)+": " + child.childParentPhone
+        child_profile_gender.text = child.childGender
+        child_profile_num_of_points.text = getString(R.string.total_points)+": " + child.childPoints.toString()
+        child_profile_shmas_by.text = getString(R.string.shmas_notes)+": " + child.childShmasBy
+        child_profile_shmas_status.text = child.childShmasOrNot
+        child_profile_shmas_date.text = getString(R.string.shmas_date)+": " + child.childShmasDate
+        child_profile_birth_date.text  = getString(R.string.birthday_date)+": " + child.childBirthdate
+        child_profile_shmas_degree.text = getString(R.string.shmas_type)+": " + child.childShmasDegree
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.title = child.childName
-
-        child_profile_parent_phone_number.setOnClickListener {
-            makeCall(child.childParentPhone)
+        if (child.childGender == "ولد")
+        {
+            shmas_linear.visibility = View.VISIBLE
         }
-
-        child_profile_child_number.setOnClickListener {
-//            makeCall(child.childPhone)
-            sendMessage()
+        else
+        {
+            shmas_linear.visibility = View.GONE
         }
-
     }
 
 
@@ -193,11 +240,11 @@ class ChildProfileActivity : AppCompatActivity() {
     private fun sendMessage(){
         val phoneTxt = "02${child.childPhone}"
         val msgText = "Hello"
-
-
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse("http://api.whatsapp.com/send?phone=$phoneTxt&text=$msgText")
         startActivity(intent)
     }
+
+
 
 }

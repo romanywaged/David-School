@@ -73,6 +73,53 @@
             android:layout_marginRight="35dp"
             android:layout_marginLeft="35dp"
             android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/child_profile_birth_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            android:text="@string/empty"
+            android:textSize="18sp"
+            android:drawablePadding="10dp"
+            android:textColor="@color/colorPrimary"
+            tools:ignore="RtlHardcoded"
+            app:drawableRightCompat="@drawable/ic_date_with_color" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_marginRight="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/child_profile_num_of_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            android:text="@string/empty"
+            android:textSize="18sp"
+            android:drawablePadding="10dp"
+            android:textColor="@color/colorPrimary"
+            tools:ignore="RtlHardcoded"
+            app:drawableRightCompat="@drawable/ic_points" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_marginRight="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="10dp"/>
+
         <TextView
             android:id="@+id/child_profile_num_of_attendance"
             android:layout_width="wrap_content"
@@ -104,9 +151,10 @@
             android:textStyle="bold"
             android:textSize="18sp"
             android:drawablePadding="10dp"
+            android:text="@string/empty"
             android:textColor="@color/colorPrimary"
             tools:ignore="RtlHardcoded"
-            app:drawableRightCompat="@drawable/ic_date" />
+            app:drawableRightCompat="@drawable/ic_date_with_color" />
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -175,5 +223,121 @@
             android:layout_marginRight="35dp"
             android:layout_marginLeft="35dp"
             android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/child_profile_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:drawablePadding="10dp"
+            android:textColor="@color/colorPrimary"
+            tools:ignore="RtlHardcoded"
+            app:drawableRightCompat="@drawable/ic_gender_icon" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:layout_marginRight="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/shmas_linear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+            <TextView
+                android:id="@+id/child_profile_shmas_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="@string/empty"
+                android:drawablePadding="10dp"
+                android:textColor="@color/colorPrimary"
+                tools:ignore="RtlHardcoded"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:layout_marginRight="35dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/child_profile_shmas_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:drawablePadding="10dp"
+                android:textColor="@color/colorPrimary"
+                tools:ignore="RtlHardcoded"
+                android:text="@string/empty" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:layout_marginRight="35dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/child_profile_shmas_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:drawablePadding="10dp"
+                android:text="@string/empty"
+                android:textColor="@color/colorPrimary"
+                tools:ignore="RtlHardcoded"
+                app:drawableRightCompat="@drawable/ic_date_with_color" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:layout_marginRight="35dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"/>
+
+
+            <TextView
+                android:id="@+id/child_profile_shmas_degree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:drawablePadding="10dp"
+                android:text="@string/empty"
+                android:textColor="@color/colorPrimary"
+                tools:ignore="RtlHardcoded" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:layout_marginRight="35dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -18,6 +18,9 @@ interface DatabaseDao {
     @Query("DELETE FROM child_table where child_class_id =:childId")
     suspend fun deleteAllChildrenInMeeting(childId: Int)
 
+    @Query("SELECT * FROM CHILD_TABLE WHERE Child_Id =:childId")
+    suspend fun getChildById(childId:Int) : Child
+
     @Update
     suspend fun updateChild(child : Child)
 

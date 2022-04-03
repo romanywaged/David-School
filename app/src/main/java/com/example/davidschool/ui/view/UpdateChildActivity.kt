@@ -226,7 +226,7 @@ class UpdateChildActivity : AppCompatActivity() {
         val intent = Intent(this, ChildProfileActivity::class.java)
         intent.putExtra("meetingName", meetingName)
         intent.putExtra("meetingId", meetingId)
-        intent.putExtra("childModel", child)
+        intent.putExtra("childId", child.id)
 
         startActivity(intent)
         finish()
@@ -240,6 +240,10 @@ class UpdateChildActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        backToProfile()
     }
 
     private fun bitmapToString(bitmap: Bitmap): String {
