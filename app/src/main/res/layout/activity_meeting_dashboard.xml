@@ -181,7 +181,7 @@
                     app:cardCornerRadius="40dp">
 
                     <LinearLayout
-                        android:id="@+id/eftkad_child_linear"
+                        android:id="@+id/shmas_date_child_linear"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clickable="true"
@@ -194,13 +194,13 @@
                             android:layout_height="75dp"
                             android:layout_marginTop="13dp"
                             android:contentDescription="@string/app_name"
-                            android:src="@drawable/message" />
+                            android:src="@drawable/deacon" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="@string/eftkad_child"
+                            android:text="@string/child_shmas_date"
                             android:textColor="@color/black"
                             android:textStyle="bold" />
 
@@ -217,7 +217,7 @@
                             android:layout_marginEnd="5dp"
                             android:gravity="center"
                             android:padding="12dp"
-                            android:text="@string/describe_eftkad_children"
+                            android:text="@string/describe_shmas_date"
                             android:textAlignment="center"
                             android:textColor="@android:color/darker_gray" />
                     </LinearLayout>
@@ -398,6 +398,55 @@
                 android:gravity="center"
                 android:clipToPadding="false"
                 android:layout_height="wrap_content">
+                <androidx.cardview.widget.CardView
+                    android:layout_width="160dp"
+                    android:layout_height="190dp"
+                    android:layout_margin="13dp"
+                    app:cardCornerRadius="40dp">
+
+                    <LinearLayout
+                        android:id="@+id/eftkad_child_linear"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="75dp"
+                            android:layout_height="75dp"
+                            android:layout_marginTop="13dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/message" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/eftkad_child"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="10dp"
+                            android:background="@color/gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:gravity="center"
+                            android:padding="12dp"
+                            android:text="@string/describe_eftkad_children"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/darker_gray" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="160dp"
@@ -428,7 +477,7 @@
                             android:layout_marginTop="10dp"
                             android:textStyle="bold"
                             android:textColor="@color/black"
-                            android:text="@string/add_class"/>
+                            android:text="@string/about_church"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"

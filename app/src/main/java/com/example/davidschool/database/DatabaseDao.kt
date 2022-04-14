@@ -73,4 +73,20 @@ interface DatabaseDao {
     @Query("DELETE FROM attendance_table where meetingId=:meetId")
     suspend fun deleteAllattendancesInMeeting(meetId : Int)
 
+
+    //############################################ Birthday ###########################################
+
+//    @Query("Select day(child_birthdate) as birthday, child_photo, Child_name  from child_table")
+
+    @Query("SELECT Birthday_Message from KHEDMA_TABLE where khedma_id =:meetingID ")
+    suspend fun getBirthdayMessage(meetingID:Int) :String
+
+    @Query("SELECT Shmas_Message from KHEDMA_TABLE where khedma_id =:meetingID ")
+    suspend fun getShmasDateMessage(meetingID:Int) :String
+
+    @Query("SELECT * from child_table where child_gender = 'ولد' and \n" +
+            "child_class_id =:meetingId and  child_shmas_or_not = 'تمت رسامته شماس'")
+    suspend fun getAllChildrenWithShmasDate(meetingId:Int) :List<Child>
+
+
 }

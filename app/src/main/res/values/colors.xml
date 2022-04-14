@@ -20,6 +20,7 @@
     <color name="green">#00bfa5</color>
     <color name="back_popup">#2f333f</color>
     <color name="gray_trans">#345E5F61</color>
+    <color name="dark_red">#990000</color>
 
     <color name="edit_text_bg_color">#f6f6f6</color>
     <color name="edit_text_bg_border">#d6d6d6</color>

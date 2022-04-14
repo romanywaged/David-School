@@ -42,6 +42,14 @@ class MeetingDashboard : AppCompatActivity() {
             navigateMeetingActivities(EftkadActivity::class.java)
         }
 
+        list_birthday_linear.setOnClickListener {
+            navigateMeetingActivities(BirthdayActivity::class.java)
+        }
+
+        shmas_date_child_linear.setOnClickListener {
+            navigateMeetingActivities(ShmasDateActivity::class.java)
+        }
+
     }
 
     private fun navigateMeetingActivities(activityClass: Class<*>){

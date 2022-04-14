@@ -41,4 +41,6 @@ sealed class DataState  {
     object SuccessDeleteAllMeetings : DataState()
 
     class SuccessGetChild(val child: Child) : DataState()
+
+    class SuccessGetMessage(val message: String) : DataState()
 }

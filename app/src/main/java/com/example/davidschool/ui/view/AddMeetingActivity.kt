@@ -1,5 +1,6 @@
 package com.example.davidschool.ui.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -66,8 +67,12 @@ class AddMeetingActivity : AppCompatActivity() {
         Add_btn_meeting.setOnClickListener {
             val meetingName = add_meeting_meetingName.text.toString()
             val meetingSchoolYear = add_meeting_meetingSchool_year.text.toString()
+            val meetingShmasMessage = add_meeting_shmas_message.text.toString()
+            val meetingBirthdayMessage = add_meeting_birthday_message.text.toString()
+            val meetingEftkadMessage = add_meeting_eftekad_message.text.toString()
 
-            validateInputstoAddMeeting(meetingName, meetingSchoolYear)
+            validateInputstoAddMeeting(meetingName, meetingSchoolYear,
+                meetingBirthdayMessage, meetingShmasMessage, meetingEftkadMessage)
         }
 
 
@@ -76,18 +81,23 @@ class AddMeetingActivity : AppCompatActivity() {
 
     }
 
-    private fun validateInputstoAddMeeting(meetingName:String, meetingSchoolYear:String) {
+    private fun validateInputstoAddMeeting(meetingName:String, meetingSchoolYear:String,
+                                           meetingBirthdayMessage:String, meetingShmasMessage:String, meetingEftkad:String) {
 
-        if (meetingName.isEmpty() || meetingSchoolYear.isEmpty())
+        if (meetingName.isEmpty() || meetingSchoolYear.isEmpty() ||
+            meetingBirthdayMessage.isEmpty() || meetingShmasMessage.isEmpty() || meetingEftkad.isEmpty())
         {
             commonMethod.showMessage("اضف كل البيانات من فضلك")
         }
         else{
             if (pickedImage){
-                val meeting:Khedma = Khedma()
+                val meeting = Khedma()
                 meeting.meetingName = meetingName
                 meeting.meetingSchoolYear = meetingSchoolYear
                 meeting.meetingPhoto = meetingPhoto
+                meeting.birthdayMessage = meetingBirthdayMessage
+                meeting.shmasMessage = meetingShmasMessage
+                meeting.eftekadMessage = meetingEftkad
                 saveMeetingIntoDatabase(meeting)
             }
             else{
@@ -120,6 +130,7 @@ class AddMeetingActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun enableAndDisableItems(isLoading: Boolean) {
         if (isLoading){
             progress_Add_meeting.visibility = View.VISIBLE

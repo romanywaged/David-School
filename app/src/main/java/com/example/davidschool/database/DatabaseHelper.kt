@@ -43,4 +43,10 @@ class DatabaseHelper @Inject constructor(private var databaseDao: DatabaseDao) {
     suspend fun deleteAllAttendancesInMeeting(meetId: Int) = databaseDao.deleteAllattendancesInMeeting(meetId)
 
     suspend fun updateTotalPoints(points : Int, childId:Int) = databaseDao.updateTotalPoints(points, childId)
+
+    suspend fun getBirthdayMessage(meetingID: Int)  = databaseDao.getBirthdayMessage(meetingID)
+
+    suspend fun getShmasDateMessage(meetingID: Int)  = databaseDao.getShmasDateMessage(meetingID)
+
+    suspend fun getAllChildrenWithShmasDate(meetingID: Int)  = databaseDao.getAllChildrenWithShmasDate(meetingID)
 }

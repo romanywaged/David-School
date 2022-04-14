@@ -15,8 +15,8 @@
     <string name="describe_add_children">اضف مخدومك الى قائمة فصلك</string>
     <string name="all_children">قائمة الفصل</string>
     <string name="all_children_desc">كل المخومين فى فصلك</string>
-    <string name="add_class">عن الكنيسه البرنامج</string>
-    <string name="add_class_desc">معلومات عن الكنيسه والمدرسه</string>
+    <string name="about_church">عن البرنامج</string>
+    <string name="add_class_desc">معلومات عن الكنيسة</string>
     <string name="attendance_list">قائمة الحضور</string>
     <string name="attendance_desc">اخذ الحضور اليومى للخدمه</string>
     <string name="parent_phone_number">رقم تليفون الوالد</string>
@@ -50,7 +50,12 @@
     <string name="eftkad_child">افتقاد الفصل</string>
     <string name="describe_eftkad_children">قم بأفتقاد فصلك</string>
     <string name="birthday_children">اعياد الميلاد</string>
-    <string name="birthday_children_desc">مناسبات واعياد ميلاد فصلك</string>
+    <string name="birthday_children_desc">اعياد ميلاد فصلك</string>
+    <string name="birthday_message">رسالة العيد ميلاد</string>
+    <string name="shmas_message">رسالة رسامته شماس</string>
+    <string name="eftkad_message">رسالة الافتقاد</string>
+    <string name="child_shmas_date">اعياد رسامة الشمامسه</string>
+    <string name="describe_shmas_date">عيد على شمامسة فصلك</string>
 
     <string-array name="Gender">
         <item>ولد</item>

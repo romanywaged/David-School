@@ -20,4 +20,13 @@ class Khedma {
 
     @ColumnInfo(name = "khedma_photo")
     var meetingPhoto: String = ""
+
+    @ColumnInfo(name = "Birthday_Message")
+    var birthdayMessage: String = ""
+
+    @ColumnInfo(name = "Shmas_Message")
+    var shmasMessage: String = ""
+
+    @ColumnInfo(name = "Eftekad_Message")
+    var eftekadMessage: String = ""
 }

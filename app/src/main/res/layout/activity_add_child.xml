@@ -26,7 +26,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="15dp"
-                android:src="@drawable/profile_image" />
+                android:src="@drawable/profile_image"
+                android:contentDescription="@string/app_name" />
 
             <TextView
                 android:id="@+id/choose_gellary_add_child"
