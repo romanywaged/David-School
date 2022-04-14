@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Add_Person_Scroll"
     android:orientation="vertical"
     android:background="#fff"
@@ -29,29 +29,33 @@
                 android:src="@drawable/circleschoollogo" />
 
             <TextView
-                android:id="@+id/update_first_tittle"
+                android:id="@+id/choose_gellary_update_child"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/update_your_data"
                 android:layout_marginStart="10dp"
-                android:layout_centerVertical="true"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:layout_marginTop="55dp"
                 android:layout_toStartOf="@id/update_icon"
+                android:drawablePadding="18dp"
                 android:fontFamily="cursive"
-                android:layout_gravity="end"
-                android:textColor="@color/black"/>
+                android:text="@string/choose_gellary"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:drawableStartCompat="@drawable/ic_image" />
 
             <TextView
+                android:id="@+id/take_photo_update_child"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/update_child_data"
+                android:text="@string/take_photo"
                 android:fontFamily="monospace"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                android:layout_below="@id/update_first_tittle"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/choose_gellary_update_child"
                 android:layout_toStartOf="@id/update_icon"
-                android:textStyle="bold"/>
+                android:drawablePadding="33dp"
+                app:drawableStartCompat="@drawable/ic_baseline_photo_camera_24"
+                />
         </RelativeLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -79,6 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
+                android:maxLength="11"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="phone"
+                android:maxLength="11"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,30 +120,156 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:hint="@string/birthday_date"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/update_child_birthday"
+                android:layout_width="match_parent"
+                android:drawableEnd="@drawable/ic_date"
+                android:drawablePadding="10dp"
+                android:inputType="none"
+                android:focusable="true"
+                android:focusableInTouchMode="false"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:hint="@string/child_abouna"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/update_child_abouna"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                />
+                android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:hint="@string/school_year"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/update_school_year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/update_child_gender"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="@string/gender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_tarnima_link_layout">
+
+            <AutoCompleteTextView
+                android:id="@+id/update_child_gender_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/update_child_shmas"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/shmas_or_not"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/add_tarnima_link_layout">
+
+            <AutoCompleteTextView
+                android:id="@+id/update_child_shmas_or_not"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_if_boy_shmas_update_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/update_child_shmas_type"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/shmas_type"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_tarnima_link_layout">
+
+                <AutoCompleteTextView
+                    android:id="@+id/update_child_shmas_degree_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    tools:ignore="LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="@string/shmas_date"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/update_child_shmas_date"
+                    android:layout_width="match_parent"
+                    android:focusableInTouchMode="false"
+                    android:focusable="true"
+                    android:drawableEnd="@drawable/ic_date"
+                    android:drawablePadding="10dp"
+                    android:inputType="none"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="@string/shmas_notes"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/update_child_shmas_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <Button
                 android:id="@+id/update_Add_btn"
                 android:layout_width="160dp"
@@ -145,7 +277,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/regbtn_style"
-                android:text="@string/update_btn"
+                android:text="@string/update"
                 android:textSize="20sp"
                 android:textColor="@color/white" />
 
@@ -158,7 +290,7 @@
                 android:layout_marginTop="20dp"
                 android:visibility="gone"
                 />
+
         </RelativeLayout>
     </LinearLayout>
-
 </ScrollView>

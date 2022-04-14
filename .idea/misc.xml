@@ -33,16 +33,18 @@
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_all_children_in_meeting.xml" value="0.19375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_all_meetings.xml" value="0.15364583333333334" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_child_profile.xml" value="0.18" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_eftkad.xml" value="0.178125" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_gat_all_attendances_in_meeting.xml" value="0.1" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_get_all_children_in_attendance_day.xml" value="0.12760416666666666" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_main.xml" value="0.209375" />
-        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_meeting_dashboard.xml" value="0.1" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_meeting_dashboard.xml" value="0.25" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_splash_screen.xml" value="0.134375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_update_child.xml" value="0.209375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/activity_update_total_points.xml" value="0.209375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/attendance_row.xml" value="0.209375" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/attendances_in_meeting_row.xml" value="0.25" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/child_row.xml" value="0.22" />
+        <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/eftkad_row.xml" value="0.33" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/layout/meeting_row.xml" value="0.15364583333333334" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/menu/context_menu.xml" value="0.15364583333333334" />
         <entry key="..\:/Users/Romany/AndroidStudioProjects/DavidSchool/app/src/main/res/menu/delete_nenu.xml" value="0.209375" />

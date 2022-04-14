@@ -2,6 +2,8 @@ package com.example.davidschool.ui.view
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.AlertDialog.THEME_HOLO_LIGHT
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.content.ActivityNotFoundException
@@ -10,7 +12,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
@@ -21,11 +22,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import coil.load
@@ -146,7 +144,7 @@ class AddChildActivity : AppCompatActivity() {
         val currentDay = calendar[Calendar.DAY_OF_MONTH]
         add_child_shmas_date.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
-                this, android.R.style.Theme_Holo_Dialog_MinWidth,
+                this, AlertDialog.THEME_HOLO_LIGHT,
                 shmasDateListener, currentYear, currentMonth, currentDay)
             datePickerDialog.window!!
                 .setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -178,7 +176,7 @@ class AddChildActivity : AppCompatActivity() {
         calendar.set(currentYear, currentMonth, currentDay)
         add_child_birthday.setOnClickListener {
             val datePickerDialog = DatePickerDialog(
-                this, android.R.style.Theme_Holo_Dialog_MinWidth,
+                this, AlertDialog.THEME_HOLO_LIGHT,
                 birthdateListener, currentYear, currentMonth, currentDay)
             datePickerDialog.window!!
                 .setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

@@ -237,14 +237,4 @@ class ChildProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendMessage(){
-        val phoneTxt = "02${child.childPhone}"
-        val msgText = "Hello"
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse("http://api.whatsapp.com/send?phone=$phoneTxt&text=$msgText")
-        startActivity(intent)
-    }
-
-
-
 }

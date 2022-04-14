@@ -72,6 +72,10 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE),
             PackageManager.PERMISSION_GRANTED)
 
+    }
+
+    override fun onStart() {
+        super.onStart()
         getAllChildren()
     }
 
@@ -147,11 +151,6 @@ class AllChildrenInMeetingActivity : AppCompatActivity(), OnChildClick {
 
 
     override fun onChildClicked(child: Child, position: Int, circleImageView: CircleImageView?) {
-
-        var activityOptions: ActivityOptions? = null
-
-        activityOptions = ActivityOptions.makeSceneTransitionAnimation(this,circleImageView,"SharedName")
-
         val intent: Intent = Intent(this, ChildProfileActivity::class.java)
         intent.putExtra("childId", child.id)
         intent.putExtra("meetingName", meetingName)

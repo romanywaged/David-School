@@ -38,6 +38,10 @@ class MeetingDashboard : AppCompatActivity() {
             navigateMeetingActivities(GatAllAttendancesInMeetingActivity::class.java)
         }
 
+        eftkad_child_linear.setOnClickListener {
+            navigateMeetingActivities(EftkadActivity::class.java)
+        }
+
     }
 
     private fun navigateMeetingActivities(activityClass: Class<*>){
