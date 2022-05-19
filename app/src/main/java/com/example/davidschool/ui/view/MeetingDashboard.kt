@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.davidschool.R
-import com.example.davidschool.repository.GetAllAttendancesInMeetingRepository
 import kotlinx.android.synthetic.main.activity_meeting_dashboard.*
 
 class MeetingDashboard : AppCompatActivity() {
@@ -35,7 +34,7 @@ class MeetingDashboard : AppCompatActivity() {
         }
 
         list_attendance_linear.setOnClickListener {
-            navigateMeetingActivities(GatAllAttendancesInMeetingActivity::class.java)
+            navigateMeetingActivities(GetAllAttendancesInMeetingActivity::class.java)
         }
 
         eftkad_child_linear.setOnClickListener {

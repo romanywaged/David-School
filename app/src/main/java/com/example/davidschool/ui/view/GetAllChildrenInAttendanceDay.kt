@@ -116,32 +116,6 @@ class GetAllChildrenInAttendanceDay : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            if (requestCode == 101) {
-                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.R){
-                    if (Environment.isExternalStorageManager()){
-                        commonMethod.showMessage("تم اعطاء الاذن")
-                    } else{
-                        commonMethod.showMessage("تم اعطاء الاذن")
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.isNotEmpty()) {
-
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                commonMethod.showMessage("تم اعطاء الاذن")
-            }else{
-                commonMethod.showMessage("تم اعطاء الاذن")
-            }
-        }
-    }
 
     private fun getAllChildrenInAttendance() {
         getAllChildrenInAttendanceDay.getAllChildren(attendanceId)

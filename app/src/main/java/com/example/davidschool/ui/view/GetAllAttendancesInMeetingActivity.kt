@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_gat_all_attendances_in_meeting.*
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class GatAllAttendancesInMeetingActivity : AppCompatActivity(), OnAttendanceDayClicked {
+class GetAllAttendancesInMeetingActivity : AppCompatActivity(), OnAttendanceDayClicked {
 
 
     private var meetingId:Int = 0

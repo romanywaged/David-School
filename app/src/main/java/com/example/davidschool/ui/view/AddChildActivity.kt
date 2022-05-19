@@ -477,10 +477,11 @@ class AddChildActivity : AppCompatActivity() {
                 when(it)
                 {
                     is DataState.Loading ->{
-                        enableItemsIfLoading(true)
+//                        enableItemsIfLoading(true)
                     }
                     is DataState.SuccessChildOperation -> {
-                        enableItemsIfLoading(false)
+//                        enableItemsIfLoading(false)
+                        commonMethod.showMessage("yes")
                     }
                     else ->
                     {

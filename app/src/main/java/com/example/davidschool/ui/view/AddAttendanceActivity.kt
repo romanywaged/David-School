@@ -1,5 +1,6 @@
 package com.example.davidschool.ui.view
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -35,6 +36,7 @@ class AddAttendanceActivity : AppCompatActivity(), OnChildAttendanceClicked {
     private lateinit var childrenAdapter: AddChildrenInAttendanceAdapter
     private val attendanceViewModel: AttendanceViewModel by viewModels()
     private lateinit var childMap:HashMap<Int, Child>
+    private lateinit var children : ArrayList<Child>
     private lateinit var commonMethod: CommonMethod
     private lateinit var attendanceChildrenRefList: ArrayList<AttendanceChildrenRef>
 
@@ -68,16 +70,31 @@ class AddAttendanceActivity : AppCompatActivity(), OnChildAttendanceClicked {
             {
                 commonMethod.showMessage("من فضلك اضف مخدومين الى قائمة الحضور")
             }
-            else{
-                insertIntoDB()
+            else {
+                if (children.size != childMap.size)
+                {
+                    alertDelete()
+                }
+                else {
+                    insertAttendanceDay()
+                }
             }
         }
     }
 
-    private fun insertIntoDB() {
-        insertAttendanceDay()
-
+    private fun alertDelete() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            .setIcon(R.drawable.circleschoollogo)
+            .setMessage("يوجد اسماء لم تتم اضافتهم لقائمة حضور اليوم هل تريد تغييب هؤلاء")
+            .setTitle(getString(R.string.app_name))
+            .setPositiveButton("نعم اريد") { dialog, _ ->
+                insertAttendanceDay()
+                dialog.dismiss()
+            }.setNegativeButton("الغاء"
+            ) { dialog, _ -> dialog.dismiss() }
+        builder.create().show()
     }
+
 
     private fun insertChildrenInAttendanceDay(id: Long) {
         for ((key,value) in childMap)
@@ -137,7 +154,8 @@ class AddAttendanceActivity : AppCompatActivity(), OnChildAttendanceClicked {
                 when(it)
                 {
                     is DataState.SuccessGetAllChildren ->{
-                        setUpRecycleView(it.children as ArrayList)
+                        children = it.children as ArrayList
+                        setUpRecycleView(children)
                     }
                     else ->{
 
@@ -154,16 +172,6 @@ class AddAttendanceActivity : AppCompatActivity(), OnChildAttendanceClicked {
         add_attendance_rv.adapter = childrenAdapter
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
 
     private fun getCurrentDate(): String {
         val calender: Calendar = Calendar.getInstance()
@@ -173,23 +181,54 @@ class AddAttendanceActivity : AppCompatActivity(), OnChildAttendanceClicked {
     }
 
     override fun onTakeAttendanceClick(child: Child, position: Int, checkBox: CheckBox) {
-        if (childMap.containsKey(position))
+        val id = childrenAdapter.getItemId(position).toInt()
+        if (childMap.containsKey(id.toInt()))
         {
-            childMap.remove(position)
+            childMap.remove(id)
             checkBox.isChecked = false
         }
         else{
-            childMap[position] = child
+            childMap[id] = child
             checkBox.isChecked = true
         }
     }
 
     private fun navigateToAllAttendancesDay(){
-        val intent = Intent(this,GatAllAttendancesInMeetingActivity::class.java)
+        val intent = Intent(this,GetAllAttendancesInMeetingActivity::class.java)
         intent.putExtra("meetingId", meetingId)
         intent.putExtra("meetingName", meetingName)
         startActivity(intent)
         finish()
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_menu, menu)
+        val searchItem = menu!!.findItem(R.id.searchChildren)
+        val searchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                childrenAdapter.filter.filter(newText)
+                return false
+            }
+        })
+        return true
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }
