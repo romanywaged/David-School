@@ -14,10 +14,10 @@
     <application
         android:name=".di.MyFreeApp"
         android:allowBackup="true"
-        android:icon="@drawable/schoollogo"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@drawable/schoollogo"
+        android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.KhedmaApp">
         <activity
